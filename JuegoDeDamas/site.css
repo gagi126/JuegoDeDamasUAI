@@ -1,0 +1,36 @@
+.container {
+            text-align: center;
+            margin-top: 50px;
+        }
+
+        .title {
+            margin-bottom: 20px;
+        }
+
+        .player-one-input {
+            margin-bottom: 10px;
+        }
+
+        .player-two-input {
+            margin-bottom: 20px;
+        }
+
+        .options-content {
+            margin-top: 20px;
+        }
+
+        .list-button {
+            margin-right: 10px;
+        }
+
+        .turn {
+            margin-top: 30px;
+            
+        }
+
+        .footer {
+            background-color: #f8f9fa;
+            padding: 20px 0;
+            text-align: center;
+            margin-top: 50px;
+        }
