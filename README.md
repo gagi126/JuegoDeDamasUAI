@@ -1,6 +1,6 @@
 # Juego de Damas - README
 
-¡Bienvenido al repositorio del Juego de Damas! Este es un emocionante juego de mesa en línea desarrollado como parte de mi trabajo final para la materia "Lenguajes de Programación para la Administración" en la Universidad Abierta Interamericana. Este proyecto forma parte del cuarto año de la carrera de Ingeniería en Sistemas y tiene como objetivo aplicar los conocimientos adquiridos en la materia. ¡Sigue leyendo para obtener más detalles sobre cómo jugar y las características del juego!
+¡Bienvenido al repositorio del Juego de Damas! Este es un emocionante juego de mesa en línea desarrollado como parte de mi trabajo final para la materia "Lenguajes de Programación para la Administración" de la Universidad Abierta Interamericana. Este proyecto forma parte del cuarto año de la carrera de Ingeniería en Sistemas y tiene como objetivo aplicar los conocimientos adquiridos en la materia. ¡Sigue leyendo para obtener más detalles sobre cómo jugar y las características del juego!
 
 ## Características
 
