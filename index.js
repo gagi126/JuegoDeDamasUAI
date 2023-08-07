@@ -705,6 +705,7 @@ function endGame(){
 	// Mostrar el mensaje durante 6 segundos y luego limpiarlo
 	setTimeout(() => {
 		document.getElementById('endGameText').innerHTML = '';
+		document.getElementById('eatPiece').innerHTML = '';
 		document.getElementById('tieText').style.display = 'none';
 		newGame();
 	  }, 6000);
