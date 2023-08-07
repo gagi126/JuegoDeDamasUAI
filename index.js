@@ -706,108 +706,126 @@ function endGame() {
   }
   
 
-function saveGame() {
-  for (var i = 0; i < gNumPieces; i++) {
-    localStorage.removeItem('piece' + i + '.row');
-    localStorage.removeItem('piece' + i + '.column');
-    localStorage.removeItem('piece' + i + '.color');
-  }
+  function saveGame() {
+    // Elimina información anterior de piezas guardadas.
+    for (var i = 0; i < gNumPieces; i++) {
+        localStorage.removeItem('piece' + i + '.row');
+        localStorage.removeItem('piece' + i + '.column');
+        localStorage.removeItem('piece' + i + '.color');
+    }
 
-  localStorage.setItem('numMove', gMoveCount);
-  localStorage.setItem('puntajeOne', playerOnePoints);
-  localStorage.setItem('puntajeTwo', playerTwoPoints);
-  gNumPieces = piezas.length;
-  localStorage.setItem('numPiezas', gNumPieces);
-  if (turnoBlancas) {
-    localStorage.setItem('esTurno', 'playerOne');
-  } else {
-    localStorage.setItem('esTurno', 'playerTwo');
-  }
-  for (var i = 0; i < piezas.length; i++) {
-    localStorage.setItem('piece' + i + '.row', piezas[i].row);
-    localStorage.setItem('piece' + i + '.column', piezas[i].column);
-    localStorage.setItem('piece' + i + '.color', piezas[i].color);
-  }
+    // Guarda información actual del juego.
+    localStorage.setItem('numMove', gMoveCount);
+    localStorage.setItem('puntajeOne', playerOnePoints);
+    localStorage.setItem('puntajeTwo', playerTwoPoints);
+    gNumPieces = piezas.length;
+    localStorage.setItem('numPiezas', gNumPieces);
+    if (turnoBlancas) {
+        localStorage.setItem('esTurno', 'playerOne');
+    } else {
+        localStorage.setItem('esTurno', 'playerTwo');
+    }
+    for (var i = 0; i < piezas.length; i++) {
+        localStorage.setItem('piece' + i + '.row', piezas[i].row);
+        localStorage.setItem('piece' + i + '.column', piezas[i].column);
+        localStorage.setItem('piece' + i + '.color', piezas[i].color);
+    }
 }
+
 
 function loadGame() {
-  piezas = [];
-  gNumPieces = parseInt(localStorage.getItem('numPiezas'));
-  gMoveCount = parseInt(localStorage.getItem('numMove'));
-	playerOnePoints = parseInt(localStorage.getItem('puntajeOne'));
-	playerTwoPoints = parseInt(localStorage.getItem('puntajeTwo'));
-	document.getElementById('playerOnePointsCount').innerHTML = playerOnePoints
-	document.getElementById('playerTwoPointsCount').innerHTML = playerTwoPoints
-  for (var i = 0; i < gNumPieces; i++) {
-    var row = parseInt(localStorage.getItem('piece' + i + '.row'));
-    var column = parseInt(localStorage.getItem('piece' + i + '.column'));
-    var color = localStorage.getItem('piece' + i + '.color');
-    if (!(color === 'null') && piezas.length < 24) {
-      piezas.push(new Casilla(row, column, color));
+    piezas = []; // Reinicia la matriz de piezas.
+    gNumPieces = parseInt(localStorage.getItem('numPiezas'));
+    gMoveCount = parseInt(localStorage.getItem('numMove'));
+    playerOnePoints = parseInt(localStorage.getItem('puntajeOne'));
+    playerTwoPoints = parseInt(localStorage.getItem('puntajeTwo'));
+    document.getElementById('playerOnePointsCount').innerHTML = playerOnePoints;
+    document.getElementById('playerTwoPointsCount').innerHTML = playerTwoPoints;
+    
+    // Carga las piezas guardadas.
+    for (var i = 0; i < gNumPieces; i++) {
+        var row = parseInt(localStorage.getItem('piece' + i + '.row'));
+        var column = parseInt(localStorage.getItem('piece' + i + '.column'));
+        var color = localStorage.getItem('piece' + i + '.color');
+        
+        // Agrega pieza si no es nula y hay espacio en la matriz de piezas.
+        if (!(color === 'null') && piezas.length < 24) {
+            piezas.push(new Casilla(row, column, color));
+        }
     }
-  }
 
-  if (parseInt(localStorage.getItem('esTurno')) == 'playerOne') {
-    turnoBlancas = true;
-    turnoRojas = false;
-  } else {
-    turnoBlancas = false;
-    turnoRojas = true;
-  }
+    // Establece el turno en función de la carga.
+    if (parseInt(localStorage.getItem('esTurno')) == 'playerOne') {
+        turnoBlancas = true;
+        turnoRojas = false;
+    } else {
+        turnoBlancas = false;
+        turnoRojas = true;
+    }
 
-  drawBoard();
+    drawBoard(); // Vuelve a dibujar el tablero con la configuración cargada.
 }
 
+
 function iniciarJuego(canvasElement, moveCountElement) {
-	document.getElementById('playerFields').style.display = 'none';
-	document.getElementById('getPlayersButton').style.display = 'none';
-	document.getElementById('endGameText').style.display = 'none';
+    // Oculta elementos no necesarios y muestra el tablero.
+    document.getElementById('playerFields').style.display = 'none';
+    document.getElementById('getPlayersButton').style.display = 'none';
+    document.getElementById('endGameText').style.display = 'none';
+
+    // Configura el lienzo y su interacción.
     gCanvasElement = canvasElement;
     gCanvasElement.width = kPixelWidth;
     gCanvasElement.height = kPixelHeight;
     gCanvasElement.addEventListener("click", gestorClick, false);
     gMoveCountElem = moveCountElement;
     gDrawingContext = gCanvasElement.getContext("2d");
-	
-	loadButton = document.getElementById('loadButton');
-	loadButton.onclick = loadGame;
 
-  saveButton = document.getElementById('saveButton');
-  saveButton.onclick = saveGame;
-	// Nueva partida
-  saveButton = document.getElementById('resetButton');
-  saveButton.onclick = newGame;
+    // Asigna funciones a los botones.
+    loadButton = document.getElementById('loadButton');
+    loadButton.onclick = loadGame;
 
-	
+    saveButton = document.getElementById('saveButton');
+    saveButton.onclick = saveGame;
+
+    newGameButton = document.getElementById('resetButton');
+    newGameButton.onclick = newGame;
+
+    // Inicia una nueva partida.
     newGame();
 }
 
+
+// Constructor de la clase Casilla para representar una posición en el tablero.
 function Casilla(row, column, color) {
-    this.row = row;
-    this.column = column;
-    this.color = color;
+    this.row = row; // Fila
+    this.column = column; // Columna
+    this.color = color; // Color de la pieza
 }
 
+// Constructor de la clase Reina que hereda de Casilla.
 function Reina(row, column, color) {
-    Casilla.apply(this, [row, column, color]);
+    Casilla.apply(this, [row, column, color]); // Llama al constructor de Casilla.
 }
 
-Reina.prototype = new Reina();
-Reina.prototype.constructor = Reina;
+Reina.prototype = new Casilla(); // Hereda de Casilla.
+Reina.prototype.constructor = Reina; // Establece el constructor correctamente.
 
-function Move(r1, c1, r2, c2) {
-    this.fromRow = r1;
-    this.fromCol = c1;
-    this.toRow = r2;
-	this.toCol = c2;
+// Constructor de la clase Move para representar un movimiento en el juego.
+function Move(fromRow, fromCol, toRow, toCol) {
+    this.fromRow = fromRow; // Fila de origen
+    this.fromCol = fromCol; // Columna de origen
+    this.toRow = toRow; // Fila de destino
+    this.toCol = toCol; // Columna de destino
 }
 
-function Jump(r1, c1, r2, c2) {
-    Move.apply(this, [r1, c1, r2, c2])
+// Constructor de la clase Jump que hereda de Move.
+function Jump(fromRow, fromCol, toRow, toCol) {
+    Move.apply(this, [fromRow, fromCol, toRow, toCol]); // Llama al constructor de Move.
 }
 
-Jump.prototype = new Move();
-Jump.prototype.constructor = Move;
+Jump.prototype = new Move(); // Hereda de Move.
+Jump.prototype.constructor = Jump; // Establece el constructor correctamente.
 
 
 
