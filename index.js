@@ -178,49 +178,65 @@ function drawQueen(p, color, selected) {
 
 
 function getCursorPosition(e) {
-	var x;
-	var y;
-	if (e.pageX != undefined && e.pageY != undefined) {
-		x = e.pageX;
-		y = e.pageY;
-	}
-	else {
-		x = e.clientX + document.body.scrollLeft + document.documentElement.scrollLeft;
-		y = e.clientY + document.body.scrollTop + document.documentElement.scrollTop;
-	}
-	x -= gCanvasElement.offsetLeft;
-	y -= gCanvasElement.offsetTop;
-	x = Math.min(x, kBoardWidth * kPieceWidth);
+    var x;
+    var y;
+
+    // Verifica si las coordenadas están disponibles en el evento.
+    if (e.pageX != undefined && e.pageY != undefined) {
+        x = e.pageX;
+        y = e.pageY;
+    } else {
+        // Calcula las coordenadas relativas al desplazamiento del documento.
+        x = e.clientX + document.body.scrollLeft + document.documentElement.scrollLeft;
+        y = e.clientY + document.body.scrollTop + document.documentElement.scrollTop;
+    }
+
+    // Ajusta las coordenadas para la posición del canvas.
+    x -= gCanvasElement.offsetLeft;
+    y -= gCanvasElement.offsetTop;
+
+    // Limita las coordenadas a los límites del tablero.
+    x = Math.min(x, kBoardWidth * kPieceWidth);
     y = Math.min(y, kBoardHeight * kPieceHeight);
+
+    // Calcula la celda correspondiente en el tablero de ajedrez.
     var cell = new Casilla(Math.floor(y/kPieceHeight), Math.floor(x/kPieceWidth));
     return cell;
 }
 
-function getLegalMoves(){
-	var theLegalMoves = [];
-	var z =0; 
 
-	while (z<piezas.length){
-		if (((turnoBlancas) && (kBlancas === piezas[z].color)) || ((turnoRojas) && (kRojas === piezas[z].color))){	
-			var nuevosMovimientos = getLegalMovesPieza(piezas[z]); // Se obtienen los movimientos legales de una sola pieza.
-			// Ordenamos los saltos y los movimientos. 
-			var t =0; 
-			while (t <nuevosMovimientos.length){ // Se quitan los saltos y se ponen los primeros. 
-					if (nuevosMovimientos[t] instanceof Jump){
-					var oneJump = nuevosMovimientos.splice(t, 1); 
-					theLegalMoves= oneJump.concat(theLegalMoves); // Los saltos se concatenan por delante. 
-				}
-				else {
-					t++;
-				}
-			}	
-			
-			theLegalMoves = theLegalMoves.concat(nuevosMovimientos); // Se concatenan con la lista de todos los movimientos para ese jugador pero por detr�s. 
-		}
-		z++;
-	}
-	return theLegalMoves;
+function getLegalMoves() {
+    var theLegalMoves = [];
+    var z = 0;
+
+    // Itera sobre todas las piezas del tablero.
+    while (z < piezas.length) {
+        // Verifica si es el turno del jugador y el color de la pieza coincide con el turno.
+        if (((turnoBlancas) && (kBlancas === piezas[z].color)) || ((turnoRojas) && (kRojas === piezas[z].color))) {
+            // Obtiene los movimientos legales para una sola pieza.
+            var nuevosMovimientos = getLegalMovesPieza(piezas[z]);
+
+            // Ordena los saltos y movimientos legales.
+            var t = 0;
+            while (t < nuevosMovimientos.length) {
+                // Se quitan los saltos y se ponen al principio de theLegalMoves.
+                if (nuevosMovimientos[t] instanceof Jump) {
+                    var oneJump = nuevosMovimientos.splice(t, 1);
+                    theLegalMoves = oneJump.concat(theLegalMoves); // Concatena los saltos al inicio.
+                } else {
+                    t++;
+                }
+            }
+
+            // Concatena los nuevosMovimientos con theLegalMoves.
+            theLegalMoves = theLegalMoves.concat(nuevosMovimientos);
+        }
+        z++;
+    }
+
+    return theLegalMoves;
 }
+
 
 function getLegalMovesPieza(unaPieza){
 	var i = -1;
