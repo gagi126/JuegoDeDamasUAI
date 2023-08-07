@@ -44,50 +44,58 @@ let gamesHistory = localStorage.getItem('gamesHistory')
   ? JSON.parse(localStorage.getItem('gamesHistory'))
   : [];
 
-function drawBoard() {
+  function drawBoard() {
 
-	var gMoveCountElem = document.getElementById('gMoveCountElem');
-	if (gMoveCountElem !== null) {
-  gMoveCountElem.innerHTML = gMoveCount;
-} else {
-  console.error("El elemento con el ID 'gMoveCountElem' no existe en el documento.");
-}
+    // Actualiza el contador de movimientos en el documento si el elemento existe.
+    var gMoveCountElem = document.getElementById('gMoveCountElem');
+    if (gMoveCountElem !== null) {
+        gMoveCountElem.innerHTML = gMoveCount;
+    } else {
+        console.error("El elemento con el ID 'gMoveCountElem' no existe en el documento.");
+    }
 
+    // Borra el lienzo de dibujo.
     gDrawingContext.clearRect(0, 0, kPixelWidth, kPixelHeight);
 
+    // Inicia un nuevo trazado de dibujo.
     gDrawingContext.beginPath();
-   
-    /* lineas verticales */
+
+    /* Dibuja lÃ­neas verticales para crear el tablero de ajedrez */
     for (var x = 0; x <= kPixelWidth; x += kPieceWidth) {
-		gDrawingContext.moveTo(0.5 + x, 0);
-		gDrawingContext.lineTo(0.5 + x, kPixelHeight);
-    }
-    
-    /* lineas horizontales */
-    for (var y = 0; y <= kPixelHeight; y += kPieceHeight) {
-		gDrawingContext.moveTo(0, 0.5 + y);
-		gDrawingContext.lineTo(kPixelWidth, 0.5 +  y);
-    }
-    
-    /* dibujado */
-    gDrawingContext.strokeStyle = "#ccc";
-    gDrawingContext.stroke();
-    
-    for (var i = 0; i < piezas.length; i++) {
-		if (piezas[i] instanceof Reina){
-			drawQueen(piezas[i], piezas[i].color, i === gSelectedPieceIndex);
-		}
-		else{
-			drawPiece(piezas[i], piezas[i].color, i === gSelectedPieceIndex);
-		}
+        gDrawingContext.moveTo(0.5 + x, 0);
+        gDrawingContext.lineTo(0.5 + x, kPixelHeight);
     }
 
+    /* Dibuja lÃ­neas horizontales para crear el tablero de ajedrez */
+    for (var y = 0; y <= kPixelHeight; y += kPieceHeight) {
+        gDrawingContext.moveTo(0, 0.5 + y);
+        gDrawingContext.lineTo(kPixelWidth, 0.5 +  y);
+    }
+
+    /* Establece el color y dibuja las lÃ­neas del tablero */
+    gDrawingContext.strokeStyle = "#ccc";
+    gDrawingContext.stroke();
+
+    // Dibuja las piezas en el tablero.
+    for (var i = 0; i < piezas.length; i++) {
+        if (piezas[i] instanceof Reina) {
+            // Dibuja una reina.
+            drawQueen(piezas[i], piezas[i].color, i === gSelectedPieceIndex);
+        } else {
+            // Dibuja una pieza genÃ©rica.
+            drawPiece(piezas[i], piezas[i].color, i === gSelectedPieceIndex);
+        }
+    }
+
+    // Actualiza el contador de movimientos.
     gMoveCountElem.innerHTML = gMoveCount;
-	
-	if (gGameInProgress && isTheGameOver()) {
-		endGame();
-    } 
+
+    // Si el juego estÃ¡ en progreso y ha terminado, finaliza el juego.
+    if (gGameInProgress && isTheGameOver()) {
+        endGame();
+    }
 }
+
 
 function drawPiece(p, color, selected) {
     var column = p.column;
@@ -171,7 +179,7 @@ function getLegalMoves(){
 				}
 			}	
 			
-			theLegalMoves = theLegalMoves.concat(nuevosMovimientos); // Se concatenan con la lista de todos los movimientos para ese jugador pero por detrás. 
+			theLegalMoves = theLegalMoves.concat(nuevosMovimientos); // Se concatenan con la lista de todos los movimientos para ese jugador pero por detrï¿½s. 
 		}
 		z++;
 	}
@@ -187,8 +195,8 @@ function getLegalMovesPieza(unaPieza){
 	
 	while (i <2){
 		if (((unaPieza.row != 0)&&(turnoBlancas))||((unaPieza.row != 7)&&(turnoRojas))){ // Si estan al final del tablero, no hay movimientos posibles
-			if (((unaPieza.column != 0)&& (i==-1))||((unaPieza.column != 7)&& (i==1))){ // Si están en una esquina del tablero, solo hay que comprobar uno de los laterales
-				if (turnoBlancas){ // Así controlamos la dirección de la pieza
+			if (((unaPieza.column != 0)&& (i==-1))||((unaPieza.column != 7)&& (i==1))){ // Si estï¿½n en una esquina del tablero, solo hay que comprobar uno de los laterales
+				if (turnoBlancas){ // Asï¿½ controlamos la direcciï¿½n de la pieza
 					fila = unaPieza.row -1;
 					columna = unaPieza.column +i; 
 				}
@@ -205,12 +213,12 @@ function getLegalMovesPieza(unaPieza){
 							if ((i<0)&&(turnoBlancas)&&(unaPieza.column >= 2)&&(unaPieza.row >= 2)){ // Miramos si, siendo blancas, tienen sitio para saltar 
 								fila = unaPieza.row -2;
 								columna = unaPieza.column -2; 
-								vacia = casillaVacia(fila, columna); // Si tiene sitio y está vacía, hay sitio para hacer un salto
+								vacia = casillaVacia(fila, columna); // Si tiene sitio y estï¿½ vacï¿½a, hay sitio para hacer un salto
 							}
 							else if ((i>0)&&(turnoBlancas)&&(unaPieza.column <= 5)&&(unaPieza.row >= 2)){ // Miramos si, siendo blancas, tienen sitio para saltar 
 								fila = unaPieza.row -2;
 								columna = unaPieza.column +2; 
-								vacia = casillaVacia(fila, columna);  // Si tiene sitio y está vacía, hay sitio para hacer un salto
+								vacia = casillaVacia(fila, columna);  // Si tiene sitio y estï¿½ vacï¿½a, hay sitio para hacer un salto
 							}
 							else if ((i<0)&&(turnoRojas)&&(unaPieza.column >= 2)&&(unaPieza.row <= 5)){ // Lo mismo para Rojas
 								fila = unaPieza.row +2;
@@ -228,11 +236,11 @@ function getLegalMovesPieza(unaPieza){
 						j++; 
 					}
 				}	
-				if ((existe === false)){ // Si la casilla contigua está libre, se puede mover.
+				if ((existe === false)){ // Si la casilla contigua estï¿½ libre, se puede mover.
 					var aMove = new Move(unaPieza.row, unaPieza.column, fila, columna); 
 					someLegalMoves.push(aMove); 
 				}
-				else if ((existe === true) && (vacia===true)){  //Si no está libre pero se puede hacer un salto, también.
+				else if ((existe === true) && (vacia===true)){  //Si no estï¿½ libre pero se puede hacer un salto, tambiï¿½n.
 					var aJump = new Jump(unaPieza.row, unaPieza.column, fila, columna); 
 					someLegalMoves.unshift(aJump); // Los saltos quedan los primeros. 
 				}
@@ -337,7 +345,7 @@ isThereAPieceBetween(piezas[gSelectedPieceIndex], cell) && (legalMoves[0] instan
 	piezas[gSelectedPieceIndex].row = cell.row;
 	piezas[gSelectedPieceIndex].column = cell.column;
 	
-	if (indiceABorrar > gSelectedPieceIndex){	// Para evitar colisiones y fallos en los índices de las piezas. 
+	if (indiceABorrar > gSelectedPieceIndex){	// Para evitar colisiones y fallos en los ï¿½ndices de las piezas. 
 		borrarPieza();
 		comprobarCoronacion();
 	}
