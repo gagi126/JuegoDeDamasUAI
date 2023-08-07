@@ -701,8 +701,9 @@ function endGame() {
 	setTimeout(() => {
 	  document.getElementById('endGameText').innerHTML = '';
 	  document.getElementById('tieText').style.display = 'none';
+	  newGame();
 	}, 6000);
-	newGame();
+	
   }
   
 
