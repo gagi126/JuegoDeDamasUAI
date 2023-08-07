@@ -479,6 +479,7 @@ function clearEndGameTexts() {
   document.getElementById('eatPiece').innerHTML = '';
   document.getElementById('cannotEatPieceSameColor').innerHTML = '';
   document.getElementById('esTurno').innerHTML = '';
+  document.getElementById('endGameText').innerHTML = '';
 }
 
 function mostrarMovimiento(casilla1, casilla2, salto) {
@@ -629,7 +630,6 @@ function newGame() {
 	gNumMoves = 0;	
 	playerOnePoints = 0;
 	playerTwoPoints = 0;
-	document.getElementById('endGameText').style.display = 'none';
 	document.getElementById('playerOnePointsCount').innerHTML = playerOnePoints;
 	document.getElementById('playerTwoPointsCount').innerHTML = playerTwoPoints;
 	gNumPieces = 24;	
