@@ -672,6 +672,7 @@ function newGame() {
 }
 
 function endGame() {
+	clearEndGameTexts();
 	let playerOne = localStorage.getItem('playerOne');
 	let playerTwo = localStorage.getItem('playerTwo');
 	gGameInProgress = false;
@@ -701,7 +702,7 @@ function endGame() {
 	// Mostrar el mensaje durante 3 segundos y luego limpiarlo
 	setTimeout(() => {
 	  document.getElementById('endGameText').innerHTML = '';
-	  clearEndGameTexts();
+	  
 	}, 3000);
   }
   
