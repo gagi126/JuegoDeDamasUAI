@@ -43,7 +43,7 @@ var gGameInProgress;
 let gamesHistory = localStorage.getItem('gamesHistory')
   ? JSON.parse(localStorage.getItem('gamesHistory'))
   : [];
-
+//Dibuja el tablero
   function drawBoard() {
 
     // Actualiza el contador de movimientos en el documento si el elemento existe.
@@ -98,48 +98,84 @@ let gamesHistory = localStorage.getItem('gamesHistory')
 
 
 function drawPiece(p, color, selected) {
+    // Obtiene la columna y la fila de la pieza.
     var column = p.column;
     var row = p.row;
+
+    // Calcula las coordenadas del centro de la pieza.
     var x = (column * kPieceWidth) + (kPieceWidth/2);
     var y = (row * kPieceHeight) + (kPieceHeight/2);
+
+    // Calcula el radio de la pieza y su grosor de borde.
     var radius = (kPieceWidth/2) - (kPieceWidth/10);
+
+    // Inicia un nuevo trazado de dibujo.
     gDrawingContext.beginPath();
+
+    // Dibuja un círculo para representar la pieza.
     gDrawingContext.arc(x, y, radius, 0, Math.PI*2, false);
+
+    // Cierra el trazado.
     gDrawingContext.closePath();
+
+    // Establece el color de relleno de la pieza.
     gDrawingContext.fillStyle = color;
     gDrawingContext.fill();
+
+    // Establece el color del borde de la pieza.
     gDrawingContext.strokeStyle = "#000";
     gDrawingContext.stroke();
+
+    // Si la pieza está seleccionada, cambia el color de relleno.
     if (selected) {
-		gDrawingContext.fillStyle = "#ff0000";
-		gDrawingContext.fill();
+        gDrawingContext.fillStyle = "#ff0000";
+        gDrawingContext.fill();
     }
 }
 
 function drawQueen(p, color, selected) {
+    // Obtiene la columna y la fila de la reina.
     var column = p.column;
     var row = p.row;
+
+    // Calcula las coordenadas del centro de la reina.
     var x = (column * kPieceWidth) + (kPieceWidth/2);
     var y = (row * kPieceHeight) + (kPieceHeight/2);
+
+    // Calcula el radio de la reina y su grosor de borde.
     var radius = (kPieceWidth/2) - (kPieceWidth/10);
+
+    // Inicia un nuevo trazado de dibujo.
     gDrawingContext.beginPath();
+
+    // Dibuja un círculo para representar la reina.
     gDrawingContext.arc(x, y, radius, 0, Math.PI*2, false);
+
+    // Cierra el trazado.
     gDrawingContext.closePath();
+
+    // Establece el color de relleno de la reina.
     gDrawingContext.fillStyle = color;
     gDrawingContext.fill();
+
+    // Establece el color del borde de la reina.
     gDrawingContext.strokeStyle = "#000";
     gDrawingContext.stroke();
+
+    // Si la reina está seleccionada, cambia el color de relleno.
     if (selected) {
-		gDrawingContext.fillStyle = "#ff0000";
-		gDrawingContext.fill();
-    }	
-	// Para la corona circular. 
-	gDrawingContext.beginPath();
+        gDrawingContext.fillStyle = "#ff0000";
+        gDrawingContext.fill();
+    }    
+
+    // Dibuja una corona circular alrededor de la reina.
+    gDrawingContext.beginPath();
     gDrawingContext.arc(x, y, radius + 2.5, 0, Math.PI*2, false);
     gDrawingContext.closePath();
     gDrawingContext.strokeStyle = "#000";
     gDrawingContext.stroke();
 }
+
 
 function getCursorPosition(e) {
 	var x;
