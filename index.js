@@ -666,6 +666,7 @@ function newGame() {
 
 function endGame(){
 	clearEndGameTexts();
+	clearInformationTexts();
 	let playerOne = localStorage.getItem('playerOne');
 	let playerTwo = localStorage.getItem('playerTwo');
 	gGameInProgress = false; 
