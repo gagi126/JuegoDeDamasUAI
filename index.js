@@ -697,11 +697,11 @@ function endGame() {
 	  localStorage.setItem('gamesHistory', JSON.stringify(gamesHistory));
 	}
   
-	// Mostrar el mensaje durante 3 segundos y luego limpiarlo
+	// Mostrar el mensaje durante 6 segundos y luego limpiarlo
 	setTimeout(() => {
 	  document.getElementById('endGameText').innerHTML = '';
 	  document.getElementById('tieText').style.display = 'none';
-	}, 3000);
+	}, 6000);
 	newGame();
   }
   
