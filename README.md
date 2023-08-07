@@ -34,4 +34,4 @@ Espero que disfrutes jugando al Juego de Damas tanto como yo disfruté creándol
 
 ---
 
-*Este juego de damas es un proyecto de código abierto desarrollado por Gaston Albornoz Salafia como parte de su trabajo final para la materia "Lenguajes de Programación para la Administración" en la Universidad Abierta Interamericana. Siéntete libre de contribuir al desarrollo del juego y hacer mejoras.*
+*Este juego de damas es un proyecto de código abierto desarrollado por Gaston Albornoz Salafia como parte de su trabajo final para la materia "Lenguajes de Programación para la Administración" de la Universidad Abierta Interamericana. Siéntete libre de contribuir al desarrollo del juego y hacer mejoras.*
