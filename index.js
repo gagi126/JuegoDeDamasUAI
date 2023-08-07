@@ -702,7 +702,7 @@ function endGame() {
 	// Mostrar el mensaje durante 3 segundos y luego limpiarlo
 	setTimeout(() => {
 	  document.getElementById('endGameText').innerHTML = '';
-	  
+	  document.getElementById('tieText').style.display = 'none';
 	}, 3000);
   }
   
