@@ -482,7 +482,6 @@ function clearEndGameTexts() {
     document.getElementById('eatPiece').innerHTML = '';
     document.getElementById('cannotEatPieceSameColor').innerHTML = '';
     document.getElementById('esTurno').innerHTML = '';
-    document.getElementById('endGameText').innerHTML = '';
 }
 
 
