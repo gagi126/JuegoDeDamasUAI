@@ -629,6 +629,7 @@ function newGame() {
 	gNumMoves = 0;	
 	playerOnePoints = 0;
 	playerTwoPoints = 0;
+	document.getElementById('endGameText').style.display = 'none';
 	document.getElementById('playerOnePointsCount').innerHTML = playerOnePoints;
 	document.getElementById('playerTwoPointsCount').innerHTML = playerTwoPoints;
 	gNumPieces = 24;	
@@ -751,6 +752,7 @@ function loadGame() {
 function iniciarJuego(canvasElement, moveCountElement) {
 	document.getElementById('playerFields').style.display = 'none';
 	document.getElementById('getPlayersButton').style.display = 'none';
+	document.getElementById('endGameText').style.display = 'none';
     gCanvasElement = canvasElement;
     gCanvasElement.width = kPixelWidth;
     gCanvasElement.height = kPixelHeight;
