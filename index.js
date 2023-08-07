@@ -463,24 +463,28 @@ function clickOnEmptyCell(cell) {
 }
 
 
-function clearbanner()
-{
-	document.getElementById('eatPiece').innerHTML = '';
+function clearbanner() {
+    // Limpia el mensaje de comer piezas.
+    document.getElementById('eatPiece').innerHTML = '';
 }
+
 function clearInformationTexts() {
-  document.getElementById('eatPiece').innerHTML = '';
-  document.getElementById('cannotEatPieceSameColor').innerHTML = '';
-  document.getElementById('endGameText').innerHTML = '';
-  document.getElementById('esTurno').innerHTML = '';
+    // Limpia varios mensajes de información.
+    document.getElementById('eatPiece').innerHTML = '';
+    document.getElementById('cannotEatPieceSameColor').innerHTML = '';
+    document.getElementById('endGameText').innerHTML = '';
+    document.getElementById('esTurno').innerHTML = '';
 }
 
 function clearEndGameTexts() {
-  document.getElementById('isNotYourTurn').innerHTML = '';
-  document.getElementById('eatPiece').innerHTML = '';
-  document.getElementById('cannotEatPieceSameColor').innerHTML = '';
-  document.getElementById('esTurno').innerHTML = '';
-  document.getElementById('endGameText').innerHTML = '';
+    // Limpia mensajes relacionados con el final del juego.
+    document.getElementById('isNotYourTurn').innerHTML = '';
+    document.getElementById('eatPiece').innerHTML = '';
+    document.getElementById('cannotEatPieceSameColor').innerHTML = '';
+    document.getElementById('esTurno').innerHTML = '';
+    document.getElementById('endGameText').innerHTML = '';
 }
+
 
 function mostrarMovimiento(casilla1, casilla2, salto) {
   let playerOne = localStorage.getItem('playerOne');
@@ -666,7 +670,6 @@ function newGame() {
 
 function endGame(){
 	clearEndGameTexts();
-	clearInformationTexts();
 	let playerOne = localStorage.getItem('playerOne');
 	let playerTwo = localStorage.getItem('playerTwo');
 	gGameInProgress = false; 
