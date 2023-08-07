@@ -672,39 +672,45 @@ function newGame() {
 	gGameInProgress = true;  
 }
 
-function endGame() {
+function endGame(){
+	clearEndGameTexts();
 	let playerOne = localStorage.getItem('playerOne');
 	let playerTwo = localStorage.getItem('playerTwo');
-	gGameInProgress = false;
-  
-	if (sonTablas) {
-	  document.getElementById('tieText').style.display = '';
-	} else if (turnoBlancas) {
-	  document.getElementById('endGameText').innerHTML = `Juego terminado, Jugador rojo ${playerTwo} Gano!`;
-	  gamesHistory.push({
-		player: playerTwo,
-		points: playerTwoPoints,
-		date: new Date(),
-	  });
-	  localStorage.setItem('gamesHistory', JSON.stringify(gamesHistory));
-	} else {
-	  document.getElementById('endGameText').innerHTML = `Juego terminado. Jugador blanco ${playerOne} Gano!`;
-	  gamesHistory.push({
-		player: playerOne,
-		points: playerOnePoints,
-		date: new Date(),
-	  });
-	  localStorage.setItem('gamesHistory', JSON.stringify(gamesHistory));
+	gGameInProgress = false; 
+	if (sonTablas){
+		document.getElementById('tieText').style.display = '';
 	}
-  
+	else if (turnoBlancas){
+		document.getElementById(
+      'endGameText'
+    ).innerHTML = `Juego terminado, Jugador ${playerTwo} Gano!`;
+    gamesHistory.push({
+      player: playerTwo,
+      points: playerTwoPoints,
+      date: new Date(),
+    });
+    localStorage.setItem('gamesHistory', JSON.stringify(gamesHistory));
+	}
+	else {
+		document.getElementById(
+      'endGameText'
+    ).innerHTML = `Juego terminado. Jugador ${playerOne} Gano!`;
+    gamesHistory.push({
+      player: playerOne,
+      points: playerOnePoints,
+      date: new Date(),
+    });
+    localStorage.setItem('gamesHistory', JSON.stringify(gamesHistory));
+	}
 	// Mostrar el mensaje durante 6 segundos y luego limpiarlo
 	setTimeout(() => {
-	  document.getElementById('endGameText').innerHTML = '';
-	  document.getElementById('tieText').style.display = 'none';
-	  newGame();
-	}, 6000);
-	
-  }
+		document.getElementById('endGameText').innerHTML = '';
+		document.getElementById('tieText').style.display = 'none';
+		newGame();
+	  }, 6000);
+	  
+}
+
   
 
   function saveGame() {
