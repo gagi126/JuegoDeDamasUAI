@@ -487,27 +487,31 @@ function clearEndGameTexts() {
 
 
 function mostrarMovimiento(casilla1, casilla2, salto) {
-  let playerOne = localStorage.getItem('playerOne');
-  let playerTwo = localStorage.getItem('playerTwo');
-  var movimiento = document.createElement("p");
-  if (turnoBlancas) {
-	  if(salto)
-	  {
-		   playerOnePoints += 10;
-      document.getElementById('playerOnePointsCount').innerHTML = playerOnePoints;
-	  }
-    document.getElementById("moveBlancas").appendChild(movimiento);
-	document.getElementById('esTurno').innerHTML = `Es turno del jugador rojo: ${playerTwo} !`;
-  } else {
-	  if(salto)
-	  {
-		playerTwoPoints += 10;
-      document.getElementById('playerTwoPointsCount').innerHTML = playerTwoPoints; 
-	  }
-    document.getElementById("moveRojas").appendChild(movimiento);
-	document.getElementById('esTurno').innerHTML = `Es turno del jugador blanco: ${playerOne} !`;
-  }
+    // Obtiene los nombres de los jugadores almacenados localmente.
+    let playerOne = localStorage.getItem('playerOne');
+    let playerTwo = localStorage.getItem('playerTwo');
+
+    // Crea un elemento de párrafo para mostrar el movimiento.
+    var movimiento = document.createElement("p");
+
+    // Verifica el turno actual y actualiza los puntos si hubo un salto.
+    if (turnoBlancas) {
+        if (salto) {
+            playerOnePoints += 10;
+            document.getElementById('playerOnePointsCount').innerHTML = playerOnePoints;
+        }
+        document.getElementById("moveBlancas").appendChild(movimiento);
+        document.getElementById('esTurno').innerHTML = `Es turno del jugador rojo: ${playerTwo} !`;
+    } else {
+        if (salto) {
+            playerTwoPoints += 10;
+            document.getElementById('playerTwoPointsCount').innerHTML = playerTwoPoints;
+        }
+        document.getElementById("moveRojas").appendChild(movimiento);
+        document.getElementById('esTurno').innerHTML = `Es turno del jugador blanco: ${playerOne} !`;
+    }
 }
+
 
 function comprobarCoronacion(){
 	if(((turnoBlancas) && (piezas[gSelectedPieceIndex].color === kBlancas) && (piezas[gSelectedPieceIndex].row === 0)) || 
