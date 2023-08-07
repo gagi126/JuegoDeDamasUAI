@@ -512,62 +512,63 @@ function mostrarMovimiento(casilla1, casilla2, salto) {
 }
 
 
-function comprobarCoronacion(){
-	if(((turnoBlancas) && (piezas[gSelectedPieceIndex].color === kBlancas) && (piezas[gSelectedPieceIndex].row === 0)) || 
-	((turnoRojas) && (piezas[gSelectedPieceIndex].color === kRojas) && (piezas[gSelectedPieceIndex].row === 7))){
-		var candidata = piezas.splice(gSelectedPieceIndex, 1); 
-		coronar(candidata[0]); 
-	}
+function comprobarCoronacion() {
+    // Verifica si una pieza debe ser coronada.
+    if (((turnoBlancas) && (piezas[gSelectedPieceIndex].color === kBlancas) && (piezas[gSelectedPieceIndex].row === 0)) || 
+        ((turnoRojas) && (piezas[gSelectedPieceIndex].color === kRojas) && (piezas[gSelectedPieceIndex].row === 7))) {
+        var candidata = piezas.splice(gSelectedPieceIndex, 1);
+        coronar(candidata[0]);
+    }
 }
 
-function cambioTurno(){
-	if (turnoBlancas){
-		clearbanner()
-		turnoBlancas=false; 
-		turnoRojas=true; 
-	}
-	else {
-		clearbanner()
-		turnoBlancas=true; 
-		turnoRojas=false; 
-	}
+function cambioTurno() {
+    // Cambia el turno de los jugadores.
+    if (turnoBlancas) {
+        clearbanner();
+        turnoBlancas = false;
+        turnoRojas = true;
+    } else {
+        clearbanner();
+        turnoBlancas = true;
+        turnoRojas = false;
+    }
 }
+
 
 function isThereAPieceBetween(casilla1, casilla2) {
-	var existe = false; 
-	var i = 0; 
-	var fila = 0; 
-	var columna = 0; 
-	
-	if ((turnoBlancas) && (casilla2.column- casilla1.column === -2) && (casilla2.row- casilla1.row === -2)){ // Hacia arriba a la izquierda
-		columna = casilla1.column -1; 
-		fila = casilla1.row -1; 
-	}
-	else if ((turnoBlancas) && (casilla2.column-casilla1.column === 2) && (casilla2.row- casilla1.row === -2)){ // Hacia arriba a la derecha
-		columna = casilla1.column +1; 
-		fila = casilla1.row -1; 
-	}
-	else  if((turnoRojas) && (casilla2.column- casilla1.column === -2 ) && (casilla2.row- casilla1.row === 2)){ // Hacia abajo a la izquierda
-		columna = casilla1.column -1; 
-		fila = casilla1.row +1; 
-	}
-	else  if((turnoRojas) && (casilla2.column- casilla1.column === 2) && (casilla2.row- casilla1.row === 2)){ // Hacia abajo a la derecha
-		columna = casilla1.column +1; 
-		fila = casilla1.row +1; 
-	}
-	while ((i<piezas.length) && (existe===false)){ 
-		if ((piezas[i].row === fila) && (piezas[i].column === columna)){
-			if (casilla1.color !==piezas[i].color){ // No puedes comer fichas de tu mismo color
-				existe = true; 
-				indiceABorrar = i; 
-			}
-			else {
-				alert("No puedes comer fichas de tu mismo color"); 
-			}
-		}
-		i++;
-	}
-	return existe; 
+    var existe = false; // Variable para verificar si hay una pieza en medio.
+    var i = 0; // Índice para iterar a través de las piezas.
+    var fila = 0;
+    var columna = 0;
+
+    // Determina la dirección del movimiento en función del turno y la casilla de destino.
+    if ((turnoBlancas) && (casilla2.column - casilla1.column === -2) && (casilla2.row - casilla1.row === -2)) { // Hacia arriba a la izquierda
+        columna = casilla1.column - 1;
+        fila = casilla1.row - 1;
+    } else if ((turnoBlancas) && (casilla2.column - casilla1.column === 2) && (casilla2.row - casilla1.row === -2)) { // Hacia arriba a la derecha
+        columna = casilla1.column + 1;
+        fila = casilla1.row - 1;
+    } else if ((turnoRojas) && (casilla2.column - casilla1.column === -2) && (casilla2.row - casilla1.row === 2)) { // Hacia abajo a la izquierda
+        columna = casilla1.column - 1;
+        fila = casilla1.row + 1;
+    } else if ((turnoRojas) && (casilla2.column - casilla1.column === 2) && (casilla2.row - casilla1.row === 2)) { // Hacia abajo a la derecha
+        columna = casilla1.column + 1;
+        fila = casilla1.row + 1;
+    }
+
+    // Itera a través de las piezas para verificar si hay una en la casilla intermedia.
+    while ((i < piezas.length) && (existe === false)) {
+        if ((piezas[i].row === fila) && (piezas[i].column === columna)) {
+            if (casilla1.color !== piezas[i].color) { // No puedes comer fichas de tu mismo color
+                existe = true;
+                indiceABorrar = i; // Guarda el índice de la pieza a borrar en caso de salto.
+            } else {
+                alert("No puedes comer fichas de tu mismo color");
+            }
+        }
+        i++;
+    }
+    return existe;
 }
 
 function borrarPieza(){
@@ -672,7 +673,6 @@ function newGame() {
 }
 
 function endGame() {
-	clearEndGameTexts();
 	let playerOne = localStorage.getItem('playerOne');
 	let playerTwo = localStorage.getItem('playerTwo');
 	gGameInProgress = false;
