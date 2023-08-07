@@ -28,7 +28,7 @@
 
 ## Contacto
 
-Si tienes alguna pregunta, sugerencia o comentario sobre el juego, no dudes en ponerte en contacto conmigo. Puedes enviar un correo electrónico a mi dirección: [gaston.albornoz@example.com](mailto:Gaston.AlbornozSalafia@alumnos.uai.edu.ar).
+Si tienes alguna pregunta, sugerencia o comentario sobre el juego, no dudes en ponerte en contacto conmigo. Puedes enviar un correo electrónico a mi dirección: [gagi126@gmail.com](mailto:gagi126@gmail.com).
 
 Espero que disfrutes jugando al Juego de Damas tanto como yo disfruté creándolo. ¡Diviértete!
 
