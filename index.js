@@ -346,97 +346,122 @@ function clickOnPiece(indicePieza) {
 
 
 function clickOnEmptyCell(cell) {
-  comprobarTablas();
-if (gSelectedPieceIndex === -1){
-return;
-}
-var direccion = 1;
-if (piezas[gSelectedPieceIndex].color === kBlancas) direccion = -1;
-var rowDiff = direccion * (cell.row - piezas[gSelectedPieceIndex].row);
-var columnDiff = direccion * (cell.column - piezas[gSelectedPieceIndex].column);
-if ((rowDiff === 1 && Math.abs(columnDiff) == 1) && (!(legalMoves[0] instanceof Jump))){
-	
-	// Mostramos el movimiento hecho
-	mostrarMovimiento(piezas[gSelectedPieceIndex], cell, false);
-		
-	piezas[gSelectedPieceIndex].row = cell.row;
-	piezas[gSelectedPieceIndex].column = cell.column;
-	
-	comprobarCoronacion(); 
-	
-	cambioTurno(); 
-	gMoveCount += 1;
-	gSelectedPieceIndex = -1;
-	gSelectedPieceHasMoved = false;
-	drawBoard();
-	gNumMoves += 1;
-	comprobarTablas(); 
-	return;
-	}else if( rowDiff === 1 && Math.abs(columnDiff) === 1 && legalMoves[0] instanceof Jump ) {
-    document.getElementById('eatPiece').innerHTML = 'Puedes comer piezas faciles!';
-  } else if (Math.abs(rowDiff) === 2 && Math.abs(columnDiff) === 2 && isThereAPieceBetween(piezas[gSelectedPieceIndex], cell) && legalMoves[0] instanceof Jump) {
-    if (!gSelectedPieceHasMoved) {
-      gMoveCount += 1;
+    // Comprobar si hay un empate por tablas.
+    comprobarTablas();
+
+    // Si no hay una pieza seleccionada, no hace nada.
+    if (gSelectedPieceIndex === -1) {
+        return;
     }
 
-    mostrarMovimiento(piezas[gSelectedPieceIndex], cell, true);
-
-    piezas[gSelectedPieceIndex].row = cell.row;
-    piezas[gSelectedPieceIndex].column = cell.column;
-
-    if (indiceABorrar > gSelectedPieceIndex) {
-      borrarPieza();
-      comprobarCoronacion();
-    } else {
-      comprobarCoronacion();
-      borrarPieza();
+    // Determina la dirección del movimiento en función del color de la pieza seleccionada.
+    var direccion = 1;
+    if (piezas[gSelectedPieceIndex].color === kBlancas) {
+        direccion = -1;
     }
 
+    // Calcula las diferencias de fila y columna.
+    var rowDiff = direccion * (cell.row - piezas[gSelectedPieceIndex].row);
+    var columnDiff = direccion * (cell.column - piezas[gSelectedPieceIndex].column);
+
+    if ((rowDiff === 1 && Math.abs(columnDiff) === 1) && (!(legalMoves[0] instanceof Jump))) {
+        // Muestra el movimiento realizado.
+        mostrarMovimiento(piezas[gSelectedPieceIndex], cell, false);
+
+        // Actualiza la posición de la pieza.
+        piezas[gSelectedPieceIndex].row = cell.row;
+        piezas[gSelectedPieceIndex].column = cell.column;
+
+        // Comprueba si la pieza debe coronarse.
+        comprobarCoronacion();
+
+        // Cambia el turno y actualiza el contador de movimientos.
+        cambioTurno();
+        gMoveCount += 1;
+
+        // Reinicia el índice de la pieza seleccionada y su estado de movimiento.
+        gSelectedPieceIndex = -1;
+        gSelectedPieceHasMoved = false;
+
+        // Vuelve a dibujar el tablero y comprueba si hay un empate por tablas.
+        drawBoard();
+        gNumMoves += 1;
+        comprobarTablas();
+        return;
+    } else if (rowDiff === 1 && Math.abs(columnDiff) === 1 && legalMoves[0] instanceof Jump) {
+        // Muestra un mensaje si hay saltos disponibles para comer piezas.
+        document.getElementById('eatPiece').innerHTML = '¡Puedes comer piezas fáciles!';
+    } else if (Math.abs(rowDiff) === 2 && Math.abs(columnDiff) === 2 && isThereAPieceBetween(piezas[gSelectedPieceIndex], cell) && legalMoves[0] instanceof Jump) {
+        if (!gSelectedPieceHasMoved) {
+            gMoveCount += 1;
+        }
+
+        // Muestra el movimiento realizado.
+        mostrarMovimiento(piezas[gSelectedPieceIndex], cell, true);
+
+        // Actualiza la posición de la pieza.
+        piezas[gSelectedPieceIndex].row = cell.row;
+        piezas[gSelectedPieceIndex].column = cell.column;
+
+        // Borra la pieza comida y comprueba si la pieza debe coronarse.
+        if (indiceABorrar > gSelectedPieceIndex) {
+            borrarPieza();
+            comprobarCoronacion();
+        } else {
+            comprobarCoronacion();
+            borrarPieza();
+        }
+
+        // Reinicia el índice de la pieza seleccionada y su estado de movimiento.
+        gSelectedPieceIndex = -1;
+        gSelectedPieceHasMoved = false;
+
+        // Cambia el turno y vuelve a dibujar el tablero.
+        cambioTurno();
+        drawBoard();
+        return;
+    } else if ((rowDiff === 1 && Math.abs(columnDiff) === 1) && (legalMoves[0] instanceof Jump)) {
+        // Muestra un mensaje si hay saltos disponibles para comer piezas.
+        alert("Hay saltos fáciles disponibles, revise la jugada.");
+    } else if ((Math.abs(rowDiff) === 2 && Math.abs(columnDiff) === 2) && isThereAPieceBetween(piezas[gSelectedPieceIndex], cell) && (legalMoves[0] instanceof Jump)) {
+        if (!gSelectedPieceHasMoved) {
+            gMoveCount += 1;
+        }
+
+        // Muestra el movimiento realizado.
+        mostrarMovimiento(piezas[gSelectedPieceIndex], cell, true, nombreBlancas, nombreRojas);
+
+        // Actualiza la posición de la pieza.
+        piezas[gSelectedPieceIndex].row = cell.row;
+        piezas[gSelectedPieceIndex].column = cell.column;
+
+        // Borra la pieza comida y comprueba si la pieza debe coronarse.
+        if (indiceABorrar > gSelectedPieceIndex) {
+            borrarPieza();
+            comprobarCoronacion();
+        } else {
+            comprobarCoronacion();
+            borrarPieza();
+        }
+
+        // Reinicia el índice de la pieza seleccionada y su estado de movimiento.
+        gSelectedPieceIndex = -1;
+        gSelectedPieceHasMoved = false;
+
+        // Cambia el turno y vuelve a dibujar el tablero.
+        cambioTurno();
+        drawBoard();
+        return;
+    }
+
+    // Reinicia el índice de la pieza seleccionada y su estado de movimiento.
     gSelectedPieceIndex = -1;
     gSelectedPieceHasMoved = false;
 
-    cambioTurno();
+    // Vuelve a dibujar el tablero.
     drawBoard();
-    return;
 }
-else if ((rowDiff == 1 && Math.abs(columnDiff) == 1) && (legalMoves[0] instanceof Jump)){
-	alert("Hay saltos faciles disponibles, revise la jugada.");
-}
-else if ((Math.abs(rowDiff)== 2 && Math.abs(columnDiff)== 2) &&
-isThereAPieceBetween(piezas[gSelectedPieceIndex], cell) && (legalMoves[0] instanceof Jump)) {
-	if (!gSelectedPieceHasMoved) {
-		 gMoveCount += 1;
-	}
-	
-	// Mostramos el movimiento hecho
-	mostrarMovimiento(piezas[gSelectedPieceIndex], cell, true, nombreBlancas, nombreRojas);
-	
-	piezas[gSelectedPieceIndex].row = cell.row;
-	piezas[gSelectedPieceIndex].column = cell.column;
-	
-	if (indiceABorrar > gSelectedPieceIndex){	// Para evitar colisiones y fallos en los �ndices de las piezas. 
-		borrarPieza();
-		comprobarCoronacion();
-	}
-	else {
-		comprobarCoronacion();
-		borrarPieza();
-	}
-	
-	
-	gSelectedPieceIndex = -1;
-	gSelectedPieceHasMoved = false;
 
-	
-	// Actualizamos el contador de los movimientos de tablas, borramos y damos turno al otro jugador. 
-	cambioTurno(); 
-	drawBoard();
-	return;
-}
-gSelectedPieceIndex = -1;
-gSelectedPieceHasMoved = false;
-drawBoard();
-}
 
 function clearbanner()
 {
