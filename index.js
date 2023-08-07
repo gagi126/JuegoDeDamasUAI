@@ -303,30 +303,47 @@ function getLegalMovesPieza(unaPieza){
 	return someLegalMoves; 
 }
 
-function gestorClick(e){
-	var casilla = getCursorPosition(e);
-	for (var i = 0; i < gNumPieces; i++) {
-		if ((piezas[i].row === casilla.row) && (piezas[i].column === casilla.column)) {
-					clickOnPiece(i);
-					return;
-				}
-	}
-	clickOnEmptyCell(casilla);	
+function gestorClick(e) {
+    // Obtiene la posición de la casilla en la que se hizo clic.
+    var casilla = getCursorPosition(e);
+
+    // Itera a través de las piezas para determinar si se hizo clic en una pieza.
+    for (var i = 0; i < gNumPieces; i++) {
+        if ((piezas[i].row === casilla.row) && (piezas[i].column === casilla.column)) {
+            // Se hace clic en una pieza, llama a la función para manejar el clic en la pieza.
+            clickOnPiece(i);
+            return;
+        }
+    }
+
+    // Si no se hizo clic en una pieza, llama a la función para manejar el clic en una celda vacía.
+    clickOnEmptyCell(casilla);
 }
 
-function clickOnPiece(indicePieza){
-	document.getElementById('isNotYourTurn').innerHTML = '';
-	if ((turnoBlancas && (piezas[indicePieza].color===kBlancas) || (turnoRojas && (piezas[indicePieza].color===kRojas)))){
-		if (gSelectedPieceIndex === indicePieza) {
-			return; 
-		}
-		gSelectedPieceIndex = indicePieza;
-		gSelectedPieceHasMoved = false;
-		drawBoard();
-	}else {
-		document.getElementById('isNotYourTurn').innerHTML = 'No es tu turno!!';
-	}
+function clickOnPiece(indicePieza) {
+    // Reinicia el mensaje de turno incorrecto.
+    document.getElementById('isNotYourTurn').innerHTML = '';
+
+    // Verifica si es el turno del jugador y si la pieza es del color correcto.
+    if ((turnoBlancas && (piezas[indicePieza].color === kBlancas)) || 
+        (turnoRojas && (piezas[indicePieza].color === kRojas))) {
+        // Si ya se había seleccionado la misma pieza, no hace nada.
+        if (gSelectedPieceIndex === indicePieza) {
+            return;
+        }
+
+        // Actualiza el índice de la pieza seleccionada y el estado de movimiento.
+        gSelectedPieceIndex = indicePieza;
+        gSelectedPieceHasMoved = false;
+
+        // Vuelve a dibujar el tablero.
+        drawBoard();
+    } else {
+        // Muestra un mensaje si no es el turno del jugador.
+        document.getElementById('isNotYourTurn').innerHTML = '¡No es tu turno!';
+    }
 }
+
 
 function clickOnEmptyCell(cell) {
   comprobarTablas();
