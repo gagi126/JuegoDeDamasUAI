@@ -4,27 +4,21 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    min-height: 100vh; /* Usamos min-height para asegurarnos de que ocupe al menos el 100% del alto de la pantalla */
+    min-height: 100vh;
+    margin: 0 auto;
+    max-width: 400px;
+    padding: 20px;
 }
 
 /* Estilos para el formulario */
-form {
-    width: 100%;
-    max-width: 400px;
-}
-
 .form-group {
     margin-bottom: 20px;
 }
 
 /* Estilos para el footer */
 .footer {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
+    margin-top: auto;
+    text-align: center;
     background-color: #f8f9fa;
     padding: 20px 0;
-    text-align: center;
-    margin-top: auto; /* Ajustamos el margen superior para acercarlo al margen inferior */
 }
