@@ -1,3 +1,5 @@
+'use strict';
+
 var nombreBlancas = document.getElementById("playerOne").value;
 var nombreRojas = document.getElementById("playerTwo").value;
 var kBoardWidth = 8;
