@@ -39,6 +39,9 @@ var gSelectedPieceHasMoved;
 var gMoveCount = 0;
 var gMoveCountElem = 0;
 var gGameInProgress;
+//Obtengo el id del button para iniciar el juego
+const getPlayersButton = document.getElementById('getPlayersButton');
+getPlayersButton.addEventListener('click', getPlayersNames);
 
 // Oculta el elemento con el ID "contextGame"
 contextGame = document.getElementById("contextGame");
