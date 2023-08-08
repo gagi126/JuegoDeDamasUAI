@@ -642,7 +642,6 @@ function getPlayersNames() {
       'esTurno'
     ).innerHTML = `Empieza el jugador blanco : ${playerOne} !`;
     document.getElementById('moveAndPoints').style.display = '';
-    document.getElementById('newGame').style.display = '';
     document.getElementById('juego').style.display = '';
     iniciarJuego(
       document.getElementById('juego'),
