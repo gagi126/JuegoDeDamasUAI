@@ -630,7 +630,7 @@ function coronar(peon){
 }
 
 function getPlayersNames() {
-    document.getElementById('isNotYourTurn').style.display = '';
+    document.getElementById('newGame').style.display = '';
   var playerOne = document.getElementById('playerOne').value;
   var playerTwo = document.getElementById('playerTwo').value;
 
