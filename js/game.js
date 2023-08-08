@@ -362,7 +362,6 @@ function gestorClick(e) {
 function clickOnPiece(indicePieza) {
     // Reinicia el mensaje de turno incorrecto.
     document.getElementById('isNotYourTurn').innerHTML = '';
-    document.getElementById('cannotEatPieceSameColor').innerHTML = '';
 
     // Verifica si es el turno del jugador y si la pieza es del color correcto.
     if ((turnoBlancas && (piezas[indicePieza].color === kBlancas)) || 
@@ -605,8 +604,13 @@ function isThereAPieceBetween(casilla1, casilla2) {
                 existe = true;
                 indiceABorrar = i; // Guarda el índice de la pieza a borrar en caso de salto.
             } else {
-                document.getElementById('cannotEatPieceSameColor').style.display = '';
-                document.getElementById('cannotEatPieceSameColor').innerHTML = 'No puedes comer fichas de tu mismo color';
+                setTimeout(() => {
+                    document.getElementById('cannotEatPieceSameColor').style.display = '';
+                    document.getElementById('cannotEatPieceSameColor').innerHTML = 'No puedes comer fichas de tu mismo color';
+                    document.getElementById('cannotEatPieceSameColor').style.display = 'none';
+                    newGame();
+                }, 3000);
+               
             }
         }
         i++;
