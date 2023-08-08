@@ -1,4 +1,4 @@
-'use strict';
+
 
 var nombreBlancas = document.getElementById("playerOne").value;
 var nombreRojas = document.getElementById("playerTwo").value;
@@ -381,13 +381,7 @@ function clickOnPiece(indicePieza) {
         drawBoard();
     } else {
         // Muestra un mensaje si no es el turno del jugador.
-        // Oculta el mensaje después de 2 segundos.
-        document.getElementById('isNotYourTurn').style.display = '';
-        document.getElementById('isNotYourTurn').innerHTML = '¡No es tu turno!';
-        setTimeout(() => {
-            document.getElementById('isNotYourTurn').style.display = 'none';
-        }, 2000);
-        
+        document.getElementById('isNotYourTurn').innerHTML = '¡No es tu turno!';   
     }
 }
 
