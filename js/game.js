@@ -608,7 +608,6 @@ function isThereAPieceBetween(casilla1, casilla2) {
                 document.getElementById('cannotEatPieceSameColor').innerHTML = 'No puedes comer fichas de tu mismo color';
                 setTimeout(() => {
                     document.getElementById('cannotEatPieceSameColor').style.display = 'none';
-                    newGame();
                 }, 2000);
             }
         }
