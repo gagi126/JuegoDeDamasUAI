@@ -630,7 +630,6 @@ function coronar(peon){
 }
 
 function getPlayersNames() {
-    document.getElementById('saveOptions').style.display = '';
   var playerOne = document.getElementById('playerOne').value;
   var playerTwo = document.getElementById('playerTwo').value;
 
@@ -643,6 +642,7 @@ function getPlayersNames() {
     ).innerHTML = `Empieza el jugador blanco : ${playerOne} !`;
     document.getElementById('moveAndPoints').style.display = '';
     document.getElementById('juego').style.display = '';
+    document.getElementById('saveOptions').style.display = '';
     iniciarJuego(
       document.getElementById('juego'),
       document.getElementById('count')
