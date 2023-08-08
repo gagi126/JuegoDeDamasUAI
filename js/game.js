@@ -37,7 +37,8 @@ var gSelectedPieceHasMoved;
 let gMoveCount = 0;
 let gMoveCountElem = 0;
 var gGameInProgress;
-
+newGame = document.getElementById("newGame");
+newGame.style.display = 'none';
 juego = document.getElementById("juego");
 juego.style.display = 'none';
 esTurno = document.getElementById("esTurno");
@@ -629,8 +630,9 @@ function coronar(peon){
 }
 
 function getPlayersNames() {
-  let playerOne = document.getElementById('playerOne').value;
-  let playerTwo = document.getElementById('playerTwo').value;
+    newGame.style.display = '';
+  var playerOne = document.getElementById('playerOne').value;
+  var playerTwo = document.getElementById('playerTwo').value;
 
   if (playerOne && playerTwo) {
     localStorage.setItem('playerOne', playerOne);
