@@ -524,6 +524,7 @@ function clearEndGameTexts() {
 }
 
 
+// Muestra el movimiento realizado en la interfaz.
 function mostrarMovimiento(casilla1, casilla2, salto) {
     // Obtiene los nombres de los jugadores almacenados localmente.
     let playerOne = localStorage.getItem('playerOne');
@@ -535,32 +536,38 @@ function mostrarMovimiento(casilla1, casilla2, salto) {
     // Verifica el turno actual y actualiza los puntos si hubo un salto.
     if (turnoBlancas) {
         if (salto) {
-            playerOnePoints += 10;
-            document.getElementById('playerOnePointsCount').innerHTML = playerOnePoints;
+            playerOnePoints += 10; // Aumenta los puntos del jugador uno en caso de un salto.
+            document.getElementById('playerOnePointsCount').innerHTML = playerOnePoints; // Actualiza los puntos en la interfaz.
         }
-        document.getElementById("moveBlancas").appendChild(movimiento);
+        document.getElementById("moveBlancas").appendChild(movimiento); // Agrega el movimiento a la sección de movimientos blancos.
 		document.getElementById('esTurno').style.display = '';
-        document.getElementById('esTurno').innerHTML = `Es turno del jugador rojo: ${playerTwo} !`;
+        document.getElementById('esTurno').innerHTML = `Es turno del jugador rojo: ${playerTwo} !`; // Actualiza el mensaje de turno en la interfaz.
     } else {
         if (salto) {
-            playerTwoPoints += 10;
-            document.getElementById('playerTwoPointsCount').innerHTML = playerTwoPoints;
+            playerTwoPoints += 10; // Aumenta los puntos del jugador dos en caso de un salto.
+            document.getElementById('playerTwoPointsCount').innerHTML = playerTwoPoints; // Actualiza los puntos en la interfaz.
         }
-        document.getElementById("moveRojas").appendChild(movimiento);
+        document.getElementById("moveRojas").appendChild(movimiento); // Agrega el movimiento a la sección de movimientos rojos.
 		document.getElementById('esTurno').style.display = '';
-        document.getElementById('esTurno').innerHTML = `Es turno del jugador blanco: ${playerOne} !`;
+        document.getElementById('esTurno').innerHTML = `Es turno del jugador blanco: ${playerOne} !`; // Actualiza el mensaje de turno en la interfaz.
     }
 }
 
 
+// Verifica si una pieza debe ser coronada.
 function comprobarCoronacion() {
-    // Verifica si una pieza debe ser coronada.
+    // Verifica si la pieza seleccionada debe ser coronada.
     if (((turnoBlancas) && (piezas[gSelectedPieceIndex].color === kBlancas) && (piezas[gSelectedPieceIndex].row === 0)) || 
         ((turnoRojas) && (piezas[gSelectedPieceIndex].color === kRojas) && (piezas[gSelectedPieceIndex].row === 7))) {
+        
+        // Extrae la pieza que será candidata a coronación.
         var candidata = piezas.splice(gSelectedPieceIndex, 1);
+
+        // Llama a la función para coronar la pieza candidata.
         coronar(candidata[0]);
     }
 }
+
 
 function cambioTurno() {
     // Cambia el turno de los jugadores.
@@ -576,6 +583,7 @@ function cambioTurno() {
 }
 
 
+// Verifica si hay una pieza en el camino entre dos casillas.
 function isThereAPieceBetween(casilla1, casilla2) {
     var existe = false; // Variable para verificar si hay una pieza en medio.
     var i = 0; // Índice para iterar a través de las piezas.
@@ -600,12 +608,15 @@ function isThereAPieceBetween(casilla1, casilla2) {
     // Itera a través de las piezas para verificar si hay una en la casilla intermedia.
     while ((i < piezas.length) && (existe === false)) {
         if ((piezas[i].row === fila) && (piezas[i].column === columna)) {
-            if (casilla1.color !== piezas[i].color) { // No puedes comer fichas de tu mismo color
+            if (casilla1.color !== piezas[i].color) { // No puedes comer fichas de tu mismo color.
                 existe = true;
                 indiceABorrar = i; // Guarda el índice de la pieza a borrar en caso de salto.
             } else {
+                // Muestra un mensaje en la interfaz cuando se intenta comer una pieza del mismo color.
                 document.getElementById('cannotEatPieceSameColor').style.display = '';
                 document.getElementById('cannotEatPieceSameColor').innerHTML = 'No puedes comer fichas de tu mismo color';
+                
+                // Oculta el mensaje después de 2 segundos.
                 setTimeout(() => {
                     document.getElementById('cannotEatPieceSameColor').style.display = 'none';
                 }, 2000);
@@ -613,7 +624,7 @@ function isThereAPieceBetween(casilla1, casilla2) {
         }
         i++;
     }
-    return existe;
+    return existe; // Retorna si hay una pieza en el camino.
 }
 
 function borrarPieza() {
