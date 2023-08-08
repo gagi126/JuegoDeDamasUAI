@@ -705,7 +705,7 @@ function endGame(){
 		document.getElementById('endGameText').style.display = '';
 		document.getElementById(
       'endGameText'
-    ).innerHTML = `Juego terminado, Jugador ${playerTwo} Gano!`;
+    ).innerHTML = `Juego terminado, Jugador rojo ${playerTwo} Gano!`;
     gamesHistory.push({
       player: playerTwo,
       points: playerTwoPoints,
@@ -717,7 +717,7 @@ function endGame(){
 		document.getElementById('endGameText').style.display = '';
 		document.getElementById(
       'endGameText'
-    ).innerHTML = `Juego terminado. Jugador ${playerOne} Gano!`;
+    ).innerHTML = `Juego terminado. Jugador blanco ${playerOne} Gano!`;
     gamesHistory.push({
       player: playerOne,
       points: playerOnePoints,
