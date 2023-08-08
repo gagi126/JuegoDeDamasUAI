@@ -26,36 +26,52 @@ var gPattern;
 
 var piezas = [];
 
-let playerOnePoints = 0;
-let playerTwoPoints = 0;
+var playerOnePoints = 0;
+var playerTwoPoints = 0;
 
 var gNumPieces= 24; // Controla las piezas metidas en memoria. 
 var gNumMoves =0; // Cuenta los movimientos sin que se produzca un salto. 
 
 var gSelectedPieceIndex;
 var gSelectedPieceHasMoved;
-let gMoveCount = 0;
-let gMoveCountElem = 0;
+var gMoveCount = 0;
+var gMoveCountElem = 0;
 var gGameInProgress;
+
+// Oculta el elemento con el ID "saveOptions"
 saveOptions = document.getElementById("saveOptions");
 saveOptions.style.display = 'none';
+
+// Oculta el elemento con el ID "juego"
 juego = document.getElementById("juego");
 juego.style.display = 'none';
+
+// Oculta el elemento con el ID "esTurno"
 esTurno = document.getElementById("esTurno");
 esTurno.style.display = 'none';
+
+// Oculta el elemento con el ID "isNotYourTurn"
 isNotYourTurn = document.getElementById("isNotYourTurn");
 isNotYourTurn.style.display = 'none';
+
+// Oculta el elemento con el ID "endGameText"
 endGameText = document.getElementById("endGameText");
 endGameText.style.display = 'none';
+
+// Oculta el elemento con el ID "tieText"
 tieText = document.getElementById("tieText");
 tieText.style.display = 'none';
+
+// Oculta el elemento con el ID "cannotEatPieceSameColor"
 cannotEatPieceSameColor = document.getElementById("cannotEatPieceSameColor");
 cannotEatPieceSameColor.style.display = 'none';
+
+// Oculta el elemento con el ID "moveAndPoints"
 moveAndPoints = document.getElementById("moveAndPoints");
 moveAndPoints.style.display = 'none';
 
 
-let gamesHistory = localStorage.getItem('gamesHistory')
+var gamesHistory = localStorage.getItem('gamesHistory')
   ? JSON.parse(localStorage.getItem('gamesHistory'))
   : [];
 //Dibuja el tablero
@@ -215,7 +231,7 @@ function getCursorPosition(e) {
     y = Math.min(y, kBoardHeight * kPieceHeight);
 
     // Calcula la celda correspondiente en el tablero de ajedrez.
-    var cell = new Casilla(Math.floor(y/kPieceHeight), Math.floor(x/kPieceWidth));
+    var cell = new Casilla(Math.floor(y / kPieceHeight), Math.floor(x / kPieceWidth));
     return cell;
 }
 
@@ -588,46 +604,47 @@ function isThereAPieceBetween(casilla1, casilla2) {
     return existe;
 }
 
-function borrarPieza(){
-	piezas.splice(indiceABorrar, 1); 
-	indiceABorrar = -1; 
-	gNumPieces--;
+function borrarPieza() {
+    // Elimina la pieza en el índice indicado (indiceABorrar) de la matriz piezas.
+    piezas.splice(indiceABorrar, 1);
+    indiceABorrar = -1; // Restablece el valor del índice a borrar.
+    gNumPieces--; // Reduce la cantidad total de piezas en el tablero.
 }
 
-function comprobarTablas(){
-	if ((gNumMoves >=40)){
-		sonTablas = true; 
-		endGame(); 
-	}
+function comprobarTablas() {
+    // Comprueba si ha habido un empate debido a la regla de las 40 jugadas sin captura ni coronación.
+    if (gNumMoves >= 40) {
+        sonTablas = true; // Establece la variable sonTablas como verdadera.
+        endGame(); // Llama a la función endGame() para finalizar el juego y mostrar el resultado.
+    }
 }
 
-function isTheGameOver(){
-	legalMoves = getLegalMoves(); 
-	if (legalMoves.length === 0){
-		return true;
-	}
-	else {
-		return false; 
-	}
+function isTheGameOver() {
+    // Obtiene todos los movimientos legales posibles para el jugador actual.
+    legalMoves = getLegalMoves();
+    // Si no hay movimientos legales, se considera que el juego ha terminado.
+    return legalMoves.length === 0;
 }
 
-function casillaVacia(fila, columna){
-	var y = 0; 
-	var vacia = true; 
-	while ((y<piezas.length) && (vacia===true)){
-		if ((piezas[y].row ===fila) && (piezas[y].column === columna)){
-			vacia = false; 
-		}
-		else {
-			y++;
-		}	
-	}
-	return vacia; 
+function casillaVacia(fila, columna) {
+    // Comprueba si una casilla en la fila y columna dadas está vacía.
+    var y = 0;
+    var vacia = true;
+    while (y < piezas.length && vacia) {
+        if (piezas[y].row === fila && piezas[y].column === columna) {
+            vacia = false; // Si se encuentra una pieza en esa casilla, se marca como no vacía.
+        } else {
+            y++;
+        }
+    }
+    return vacia; // Devuelve true si la casilla está vacía, de lo contrario, devuelve false.
 }
 
-function coronar(peon){
-	piezas.push(new Reina(peon.row, peon.column, peon.color)); 
+function coronar(peon) {
+    // Reemplaza un peón en la posición dada con una Reina del mismo color.
+    piezas.push(new Reina(peon.row, peon.column, peon.color));
 }
+
 
 function getPlayersNames() {
   var playerOne = document.getElementById('playerOne').value;
@@ -653,92 +670,106 @@ function getPlayersNames() {
 }
 
 function newGame() {
+    // Reiniciamos variables.
+    gNumMoves = 0;
+    playerOnePoints = 0;
+    playerTwoPoints = 0;
+    
+    // Actualiza los contadores de puntos en la interfaz.
+    document.getElementById('playerOnePointsCount').innerHTML = playerOnePoints;
+    document.getElementById('playerTwoPointsCount').innerHTML = playerTwoPoints;
+    
+    gNumPieces = 24;
+    turnoBlancas = true;
+    turnoRojas = false;
 
-	// Reiniciamos variables. 
-	gNumMoves = 0;	
-	playerOnePoints = 0;
-	playerTwoPoints = 0;
-	document.getElementById('playerOnePointsCount').innerHTML = playerOnePoints;
-	document.getElementById('playerTwoPointsCount').innerHTML = playerTwoPoints;
-	gNumPieces = 24;	
-	turnoBlancas = true; 
-	turnoRojas = false; 
-	
-	
-	piezas = []; // Vaciamos la lista de piezas, por si estamos pulsando el resetButton. 
+    // Vaciamos la lista de piezas, por si estamos pulsando el resetButton.
+    piezas = [];
 
-	for (var i=0; i< kFilasIniciales; i++){
-		for (var j=(i+1)%2; j < kBoardHeight; j=j+2) {
-			piezas.push(new Casilla(i,j, kRojas));
-		}
-	}
+    // Agrega las piezas iniciales para el juego.
+    for (var i = 0; i < kFilasIniciales; i++) {
+        for (var j = (i + 1) % 2; j < kBoardHeight; j = j + 2) {
+            piezas.push(new Casilla(i, j, kRojas));
+        }
+    }
 
-	for (var i=kBoardHeight-1; i >= kBoardHeight - kFilasIniciales; i--){
-		for (var j=(i+1)%2; j < kBoardHeight; j=j+2) {
-			piezas.push(new Casilla(i,j, kBlancas));
-		}
-	}
+    for (var i = kBoardHeight - 1; i >= kBoardHeight - kFilasIniciales; i--) {
+        for (var j = (i + 1) % 2; j < kBoardHeight; j = j + 2) {
+            piezas.push(new Casilla(i, j, kBlancas));
+        }
+    }
 
     gNumPieces = piezas.length;
     gSelectedPieceIndex = -1;
     gSelectedPieceHasMoved = false;
     gMoveCount = 0;
-	gGameInProgress = false; 
-	
-	turnoBlancas = true; 
-	turnoRojas = false;  
-	
-	drawBoard();
-	gGameInProgress = true;  
+    gGameInProgress = false;
+
+    turnoBlancas = true;
+    turnoRojas = false;
+
+    drawBoard(); // Dibuja el tablero con las piezas iniciales.
+    gGameInProgress = true; // Marca que el juego está en progreso.
 }
 
-function endGame(){
-	clearEndGameTexts();
-	let playerOne = localStorage.getItem('playerOne');
-	let playerTwo = localStorage.getItem('playerTwo');
-	gGameInProgress = false; 
-	if (sonTablas){
-		document.getElementById('tieText').style.display = '';
-		document.getElementById('tieText').innerHTML = 'Hubo empate, juege de nuevo!';
-	}
-	else if (turnoBlancas){
-		document.getElementById('endGameText').style.display = '';
-		document.getElementById(
-      'endGameText'
-    ).innerHTML = `Juego terminado, Jugador rojo ${playerTwo} Gano!`;
-    gamesHistory.push({
-      player: playerTwo,
-      points: playerTwoPoints,
-      date: new Date(),
-    });
-    localStorage.setItem('gamesHistory', JSON.stringify(gamesHistory));
-	}
-	else {
-		document.getElementById('endGameText').style.display = '';
-		document.getElementById(
-      'endGameText'
-    ).innerHTML = `Juego terminado. Jugador blanco ${playerOne} Gano!`;
-    gamesHistory.push({
-      player: playerOne,
-      points: playerOnePoints,
-      date: new Date(),
-    });
-    localStorage.setItem('gamesHistory', JSON.stringify(gamesHistory));
-	}
-	// Mostrar el mensaje durante 6 segundos y luego limpiarlo
-	setTimeout(() => {
-		document.getElementById('endGameText').innerHTML = '';
-		document.getElementById('endGameText').style.display = 'none';
-		document.getElementById('eatPiece').innerHTML = '';
-		document.getElementById('tieText').style.display = 'none';
-		newGame();
-	  }, 6000);
-	  
+
+function endGame() {
+    // Limpia los textos de fin de juego y resetea las variables relacionadas con el juego
+    clearEndGameTexts();
+
+    // Obtiene los nombres de los jugadores almacenados en el localStorage
+    let playerOne = localStorage.getItem('playerOne');
+    let playerTwo = localStorage.getItem('playerTwo');
+
+    // Establece que el juego ha terminado
+    gGameInProgress = false;
+
+    // Comprueba si el juego terminó en empate
+    if (sonTablas) {
+        // Muestra el mensaje de empate y actualiza su contenido
+        document.getElementById('tieText').style.display = '';
+        document.getElementById('tieText').innerHTML = 'Hubo empate, ¡juegue de nuevo!';
+    } else if (turnoBlancas) {
+        // Muestra el mensaje de fin de juego y actualiza su contenido con el nombre del jugador rojo ganador
+        document.getElementById('endGameText').style.display = '';
+        document.getElementById('endGameText').innerHTML = `Juego terminado, Jugador rojo ${playerTwo} Ganó!`;
+
+        // Agrega una entrada en el historial de juegos para el jugador rojo
+        gamesHistory.push({
+            player: playerTwo,
+            points: playerTwoPoints,
+            date: new Date(),
+        });
+
+        // Actualiza el historial de juegos en el localStorage
+        localStorage.setItem('gamesHistory', JSON.stringify(gamesHistory));
+    } else {
+        // Muestra el mensaje de fin de juego y actualiza su contenido con el nombre del jugador blanco ganador
+        document.getElementById('endGameText').style.display = '';
+        document.getElementById('endGameText').innerHTML = `Juego terminado. Jugador blanco ${playerOne} Ganó!`;
+
+        // Agrega una entrada en el historial de juegos para el jugador blanco
+        gamesHistory.push({
+            player: playerOne,
+            points: playerOnePoints,
+            date: new Date(),
+        });
+
+        // Actualiza el historial de juegos en el localStorage
+        localStorage.setItem('gamesHistory', JSON.stringify(gamesHistory));
+    }
+
+    // Mostrar el mensaje durante 6 segundos y luego limpiarlo y reiniciar un nuevo juego
+    setTimeout(() => {
+        document.getElementById('endGameText').innerHTML = '';
+        document.getElementById('endGameText').style.display = 'none';
+        document.getElementById('eatPiece').innerHTML = '';
+        document.getElementById('tieText').style.display = 'none';
+        newGame();
+    }, 6000);
 }
 
-  
-
-  function saveGame() {
+function saveGame() {
     // Elimina información anterior de piezas guardadas.
     for (var i = 0; i < gNumPieces; i++) {
         localStorage.removeItem('piece' + i + '.row');
@@ -752,11 +783,15 @@ function endGame(){
     localStorage.setItem('puntajeTwo', playerTwoPoints);
     gNumPieces = piezas.length;
     localStorage.setItem('numPiezas', gNumPieces);
+    
+    // Guarda el jugador cuyo turno es el actual.
     if (turnoBlancas) {
         localStorage.setItem('esTurno', 'playerOne');
     } else {
         localStorage.setItem('esTurno', 'playerTwo');
     }
+
+    // Guarda información de cada pieza en el tablero.
     for (var i = 0; i < piezas.length; i++) {
         localStorage.setItem('piece' + i + '.row', piezas[i].row);
         localStorage.setItem('piece' + i + '.column', piezas[i].column);
@@ -771,9 +806,11 @@ function loadGame() {
     gMoveCount = parseInt(localStorage.getItem('numMove'));
     playerOnePoints = parseInt(localStorage.getItem('puntajeOne'));
     playerTwoPoints = parseInt(localStorage.getItem('puntajeTwo'));
+    
+    // Actualiza los contadores de puntos en la interfaz.
     document.getElementById('playerOnePointsCount').innerHTML = playerOnePoints;
     document.getElementById('playerTwoPointsCount').innerHTML = playerTwoPoints;
-    
+
     // Carga las piezas guardadas.
     for (var i = 0; i < gNumPieces; i++) {
         var row = parseInt(localStorage.getItem('piece' + i + '.row'));
@@ -826,6 +863,7 @@ function iniciarJuego(canvasElement, moveCountElement) {
     // Inicia una nueva partida.
     newGame();
 }
+
 
 
 // Constructor de la clase Casilla para representar una posición en el tablero.
