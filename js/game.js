@@ -362,6 +362,7 @@ function gestorClick(e) {
 function clickOnPiece(indicePieza) {
     // Reinicia el mensaje de turno incorrecto.
     document.getElementById('isNotYourTurn').innerHTML = '';
+    document.getElementById('cannotEatPieceSameColor').innerHTML = '';
 
     // Verifica si es el turno del jugador y si la pieza es del color correcto.
     if ((turnoBlancas && (piezas[indicePieza].color === kBlancas)) || 
