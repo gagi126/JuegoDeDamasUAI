@@ -633,21 +633,23 @@ function getPlayersNames() {
   var playerOne = document.getElementById('playerOne').value;
   var playerTwo = document.getElementById('playerTwo').value;
 
-  if (playerOne && playerTwo) {
+  if (playerOne && playerTwo && playerOne.trim() !== "" && playerTwo.trim() !== "") {
+    // El código dentro de esta condición se ejecutará si ambos playerOne y playerTwo no son nulos ni vacíos
     localStorage.setItem('playerOne', playerOne);
     localStorage.setItem('playerTwo', playerTwo);
-	 document.getElementById('esTurno').style.display = '';
-    document.getElementById(
-      'esTurno'
-    ).innerHTML = `Empieza el jugador blanco : ${playerOne} !`;
+    document.getElementById('esTurno').style.display = '';
+    document.getElementById('esTurno').innerHTML = `Empieza el jugador blanco: ${playerOne} !`;
     document.getElementById('moveAndPoints').style.display = '';
     document.getElementById('juego').style.display = '';
     document.getElementById('saveOptions').style.display = '';
     iniciarJuego(
-      document.getElementById('juego'),
-      document.getElementById('count')
+        document.getElementById('juego'),
+        document.getElementById('count')
     );
-  }
+} else {
+    // El código dentro de esta parte se ejecutará si playerOne o playerTwo son nulos o vacíos
+    alert("Por favor, ingresa los nombres de ambos jugadores.");
+}
 }
 
 function newGame() {
