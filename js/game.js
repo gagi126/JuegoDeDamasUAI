@@ -844,35 +844,34 @@ function loadGame() {
 }
 
 
+// Inicia el juego y configura la interfaz gráfica y la interacción del usuario.
 function iniciarJuego(canvasElement, moveCountElement) {
-    // Oculta elementos no necesarios y muestra el tablero.
+    // Oculta elementos que no son necesarios y muestra el tablero del juego.
     document.getElementById('playerFields').style.display = 'none';
     document.getElementById('getPlayersButton').style.display = 'none';
     document.getElementById('endGameText').style.display = 'none';
 
-    // Configura el lienzo y su interacción.
+    // Configura el lienzo con las dimensiones y la interacción de clic.
     gCanvasElement = canvasElement;
     gCanvasElement.width = kPixelWidth;
     gCanvasElement.height = kPixelHeight;
-    gCanvasElement.addEventListener("click", gestorClick, false);
-    gMoveCountElem = moveCountElement;
-    gDrawingContext = gCanvasElement.getContext("2d");
+    gCanvasElement.addEventListener("click", gestorClick, false); // Asocia la función gestorClick al evento de clic en el lienzo.
+    gMoveCountElem = moveCountElement; // Almacena una referencia al elemento HTML donde se mostrará el contador de movimientos.
+    gDrawingContext = gCanvasElement.getContext("2d"); // Obtiene el contexto de dibujo 2D del lienzo.
 
     // Asigna funciones a los botones.
-    loadButton = document.getElementById('loadButton');
-    loadButton.onclick = loadGame;
+    loadButton = document.getElementById('loadButton'); // Obtiene el botón de carga del juego.
+    loadButton.onclick = loadGame; // Asigna la función loadGame al evento de clic en el botón de carga.
 
-    saveButton = document.getElementById('saveButton');
-    saveButton.onclick = saveGame;
+    saveButton = document.getElementById('saveButton'); // Obtiene el botón de guardado del juego.
+    saveButton.onclick = saveGame; // Asigna la función saveGame al evento de clic en el botón de guardado.
 
-    newGameButton = document.getElementById('resetButton');
-    newGameButton.onclick = newGame;
+    newGameButton = document.getElementById('resetButton'); // Obtiene el botón de inicio de nueva partida.
+    newGameButton.onclick = newGame; // Asigna la función newGame al evento de clic en el botón de inicio de nueva partida.
 
     // Inicia una nueva partida.
-    newGame();
+    newGame(); // Llama a la función newGame para iniciar el juego.
 }
-
-
 
 // Constructor de la clase Casilla para representar una posición en el tablero.
 function Casilla(row, column, color) {
