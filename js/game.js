@@ -604,7 +604,8 @@ function isThereAPieceBetween(casilla1, casilla2) {
                 existe = true;
                 indiceABorrar = i; // Guarda el índice de la pieza a borrar en caso de salto.
             } else {
-                alert("No puedes comer fichas de tu mismo color");
+                document.getElementById('cannotEatPieceSameColor').style.display = '';
+                document.getElementById('cannotEatPieceSameColor').innerHTML = 'No puedes comer fichas de tu mismo color';
             }
         }
         i++;
@@ -654,67 +655,79 @@ function coronar(peon) {
 }
 
 
+// Obtiene los nombres de los jugadores y realiza la configuración inicial del juego.
 function getPlayersNames() {
-  var playerOne = document.getElementById('playerOne').value;
-  var playerTwo = document.getElementById('playerTwo').value;
+    var playerOne = document.getElementById('playerOne').value; // Obtiene el nombre del jugador uno.
+    var playerTwo = document.getElementById('playerTwo').value; // Obtiene el nombre del jugador dos.
 
-  if (playerOne && playerTwo && playerOne.trim() !== "" && playerTwo.trim() !== "") {
-    // El código dentro de esta condición se ejecutará si ambos playerOne y playerTwo no son nulos ni vacíos
-    localStorage.setItem('playerOne', playerOne);
-    localStorage.setItem('playerTwo', playerTwo);
-    document.getElementById('esTurno').style.display = '';
-    document.getElementById('esTurno').innerHTML = `Empieza el jugador blanco: ${playerOne} !`;
-    document.getElementById('moveAndPoints').style.display = '';
-    document.getElementById('juego').style.display = '';
-    document.getElementById('saveOptions').style.display = '';
-    iniciarJuego(
-        document.getElementById('juego'),
-        document.getElementById('count')
-    );
-} else {
-    // El código dentro de esta parte se ejecutará si playerOne o playerTwo son nulos o vacíos
-    alert("Por favor, ingresa los nombres de ambos jugadores.");
-}
+    // Verifica si ambos nombres son válidos y no están vacíos.
+    if (playerOne && playerTwo && playerOne.trim() !== "" && playerTwo.trim() !== "") {
+        // El código dentro de esta condición se ejecutará si ambos nombres son válidos y no están vacíos.
+
+        // Almacena los nombres de los jugadores en el almacenamiento local.
+        localStorage.setItem('playerOne', playerOne);
+        localStorage.setItem('playerTwo', playerTwo);
+
+        // Actualiza la interfaz para mostrar información sobre el turno y el juego.
+        document.getElementById('esTurno').style.display = '';
+        document.getElementById('esTurno').innerHTML = `Empieza el jugador blanco: ${playerOne} !`;
+        document.getElementById('moveAndPoints').style.display = '';
+        document.getElementById('juego').style.display = '';
+        document.getElementById('saveOptions').style.display = '';
+
+        // Inicia el juego pasando los elementos del lienzo y el contador de movimientos.
+        iniciarJuego(
+            document.getElementById('juego'),
+            document.getElementById('count')
+        );
+    } else {
+        // El código dentro de esta parte se ejecutará si playerOne o playerTwo son nulos o vacíos.
+        
+        // Muestra una alerta indicando que se deben ingresar los nombres de ambos jugadores.
+        alert("Por favor, ingresa los nombres de ambos jugadores.");
+    }
 }
 
+
+// Inicia una nueva partida.
 function newGame() {
-    // Reiniciamos variables.
-    gNumMoves = 0;
-    playerOnePoints = 0;
-    playerTwoPoints = 0;
-    
+    // Reinicia las variables relacionadas con el juego y los puntos.
+    gNumMoves = 0; // Reinicia el contador de movimientos.
+    playerOnePoints = 0; // Reinicia los puntos del jugador uno.
+    playerTwoPoints = 0; // Reinicia los puntos del jugador dos.
+
     // Actualiza los contadores de puntos en la interfaz.
     document.getElementById('playerOnePointsCount').innerHTML = playerOnePoints;
     document.getElementById('playerTwoPointsCount').innerHTML = playerTwoPoints;
-    
-    gNumPieces = 24;
-    turnoBlancas = true;
-    turnoRojas = false;
 
-    // Vaciamos la lista de piezas, por si estamos pulsando el resetButton.
+    gNumPieces = 24; // Establece el número inicial de piezas.
+    turnoBlancas = true; // Establece el turno de las piezas blancas.
+    turnoRojas = false; // Establece que no es el turno de las piezas rojas.
+
+    // Vacía la lista de piezas por si se está reiniciando el juego.
     piezas = [];
 
     // Agrega las piezas iniciales para el juego.
     for (var i = 0; i < kFilasIniciales; i++) {
         for (var j = (i + 1) % 2; j < kBoardHeight; j = j + 2) {
-            piezas.push(new Casilla(i, j, kRojas));
+            piezas.push(new Casilla(i, j, kRojas)); // Agrega piezas rojas en las posiciones iniciales.
         }
     }
 
     for (var i = kBoardHeight - 1; i >= kBoardHeight - kFilasIniciales; i--) {
         for (var j = (i + 1) % 2; j < kBoardHeight; j = j + 2) {
-            piezas.push(new Casilla(i, j, kBlancas));
+            piezas.push(new Casilla(i, j, kBlancas)); // Agrega piezas blancas en las posiciones iniciales.
         }
     }
 
-    gNumPieces = piezas.length;
-    gSelectedPieceIndex = -1;
-    gSelectedPieceHasMoved = false;
-    gMoveCount = 0;
-    gGameInProgress = false;
+    gNumPieces = piezas.length; // Actualiza el número de piezas.
+    gSelectedPieceIndex = -1; // Reinicia el índice de la pieza seleccionada.
+    gSelectedPieceHasMoved = false; // Reinicia el estado de movimiento de la pieza seleccionada.
+    gMoveCount = 0; // Reinicia el contador de movimientos.
+    gGameInProgress = false; // Marca que el juego no está en progreso.
 
-    turnoBlancas = true;
-    turnoRojas = false;
+    turnoBlancas = true; // Establece el turno de las piezas blancas.
+    turnoRojas = false; // Establece que no es el turno de las piezas rojas.
 
     drawBoard(); // Dibuja el tablero con las piezas iniciales.
     gGameInProgress = true; // Marca que el juego está en progreso.
@@ -808,40 +821,42 @@ function saveGame() {
 }
 
 
+// Carga un juego previamente guardado desde el almacenamiento local.
 function loadGame() {
-    piezas = []; // Reinicia la matriz de piezas.
-    gNumPieces = parseInt(localStorage.getItem('numPiezas'));
-    gMoveCount = parseInt(localStorage.getItem('numMove'));
-    playerOnePoints = parseInt(localStorage.getItem('puntajeOne'));
-    playerTwoPoints = parseInt(localStorage.getItem('puntajeTwo'));
-    
+    piezas = []; // Reinicia la matriz de piezas para cargar nuevas piezas.
+    gNumPieces = parseInt(localStorage.getItem('numPiezas')); // Obtiene el número de piezas guardadas.
+    gMoveCount = parseInt(localStorage.getItem('numMove')); // Obtiene el número de movimientos guardados.
+    playerOnePoints = parseInt(localStorage.getItem('puntajeOne')); // Obtiene el puntaje del jugador uno guardado.
+    playerTwoPoints = parseInt(localStorage.getItem('puntajeTwo')); // Obtiene el puntaje del jugador dos guardado.
+
     // Actualiza los contadores de puntos en la interfaz.
     document.getElementById('playerOnePointsCount').innerHTML = playerOnePoints;
     document.getElementById('playerTwoPointsCount').innerHTML = playerTwoPoints;
 
-    // Carga las piezas guardadas.
+    // Carga las piezas guardadas desde el almacenamiento local.
     for (var i = 0; i < gNumPieces; i++) {
-        var row = parseInt(localStorage.getItem('piece' + i + '.row'));
-        var column = parseInt(localStorage.getItem('piece' + i + '.column'));
-        var color = localStorage.getItem('piece' + i + '.color');
-        
-        // Agrega pieza si no es nula y hay espacio en la matriz de piezas.
+        var row = parseInt(localStorage.getItem('piece' + i + '.row')); // Obtiene la fila de la pieza.
+        var column = parseInt(localStorage.getItem('piece' + i + '.column')); // Obtiene la columna de la pieza.
+        var color = localStorage.getItem('piece' + i + '.color'); // Obtiene el color de la pieza.
+
+        // Agrega una pieza a la matriz solo si no es nula y hay espacio en la matriz de piezas.
         if (!(color === 'null') && piezas.length < 24) {
-            piezas.push(new Casilla(row, column, color));
+            piezas.push(new Casilla(row, column, color)); // Crea una nueva instancia de pieza y la agrega a la matriz.
         }
     }
 
     // Establece el turno en función de la carga.
     if (parseInt(localStorage.getItem('esTurno')) == 'playerOne') {
-        turnoBlancas = true;
+        turnoBlancas = true; // Es el turno de las blancas.
         turnoRojas = false;
     } else {
         turnoBlancas = false;
-        turnoRojas = true;
+        turnoRojas = true; // Es el turno de las rojas.
     }
 
-    drawBoard(); // Vuelve a dibujar el tablero con la configuración cargada.
+    drawBoard(); // Redibuja el tablero con la configuración cargada.
 }
+
 
 
 // Inicia el juego y configura la interfaz gráfica y la interacción del usuario.
