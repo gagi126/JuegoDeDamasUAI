@@ -38,6 +38,16 @@ let gMoveCount = 0;
 let gMoveCountElem = 0;
 var gGameInProgress;
 
+contextGame = document.getElementById("contextGame");
+contextGame.innerHTML = "<div id='restart_game' class='butn' onclick='restartGame(); return false;'>Start New Game</div>";
+contextGame.innerHTML += "<div id='save_game' class='butn' onclick='saveGame(); '>Save Game</div>";
+contextGame.innerHTML += "<div id='load_game' class='butn' onclick='LoadGame(); '>Load Game</div>";
+contextGame.innerHTML += "<div id='add_player' class='butn' onclick='addPlayer();'>Add Player</div>";
+contextGame.innerHTML += "<div id='player_one' class='player'> <img src='images/cuphead.png'>Player 1: <span id='player_one_score'></span> <input id='player1'type='text' value='enter your name'/></div>";
+contextGame.innerHTML += "<div id='player_two' class='player'> <img src='images/mugman.png'>Player 2: <span id='player_two_score'></span> <input id='player2'type='text' value='enter your name'/></div>";
+contextGame.innerHTML += "<div id='whosturn'></div>";
+
+
 
 
 let gamesHistory = localStorage.getItem('gamesHistory')

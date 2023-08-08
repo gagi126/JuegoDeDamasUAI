@@ -6,6 +6,7 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
 	<link rel="stylesheet" href="site.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="index.js"></script>
 </head>
 <body>
     <div class="container">
@@ -13,41 +14,42 @@
         <div id="playerFields">
             <label for="white-player-name">Nombre del jugador de blancas:</label>
             <input class="player-one-input form-control" type="text" id="playerOne" name="playerOne" required>
-            <br>
             <label for="red-player-name">Nombre del jugador de rojas:</label>
             <input class="player-two-input form-control" type="text" id="playerTwo" name="playerTwo" required>
-            <br><br>
             <div class="options-content">
                 <button class="list-button btn btn-primary" id="getPlayersButton" onclick="getPlayersNames()">Empezar partida</button>
             </div>
         </div>
-        <canvas id="juego" width="600" height="300" style="display: none;"></canvas>
+        <canvas id="juego" width="600" height="300"></canvas>
         <h2 class="turn" id="esTurno"></h2>
         <h2 class="turn" id="isNotYourTurn"></h2>
         <h1 class="turn" id="endGameText"></h1>
-        <h1 class="turn" id="tieText" style="display: none;">Empate! ¡Juega de nuevo!</h1>
+        <h1 class="turn" id="tieText"></h1>
         <h2 class="turn" id="eatPiece"></h2>
         <h2 class="turn" id="cannotEatPieceSameColor"></h2>
-        <div id="moveAndPoints" style="display: none;">
+        <div id="moveAndPoints">
             <p id="movements">Movimientos: <span id="gMoveCountElem">0</span></p>
             <p id="playerOnePoints">Puntos del jugador blanco: <span id="playerOnePointsCount">0</span></p>
             <p id="playerTwoPoints">Puntos del jugador rojo: <span id="playerTwoPointsCount">0</span></p>
         </div>
         <div id="moveBlancas"></div>
         <div id="moveRojas"></div>
-        <div class="options-content" id="newGame" style="display: none;">
+        <div class="options-content" id="newGame">
+            <div id="contextGame"></div>
             <button class="list-button btn btn-primary" id="resetButton">Nuevo juego</button>
             <button class="list-button btn btn-primary" onclick="saveGame()" id="saveButton">Guardar juego</button>
             <button class="list-button btn btn-primary" onclick="loadGame()" id="loadButton">Cargar juego</button>
         </div>
 	</div>
-    <script src="index.js"></script>
     <footer class="footer">
     <div class="container">
         <p>Desarrollado por Gaston Albornoz Salafia</p> 
         <button class="btn btn-primary" onclick="window.location.href='contact.html'">Contacto</button></br>
 		<a href="https://github.com/gagi126/JuegoDeDamasUAI" class="btn btn-link">Link a repositorio de GitHub</a>
     </div>
+    <script type="text/javascript">
+        initializeGame();
+    </script>
 </footer>
 </body>
 </html>
