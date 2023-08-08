@@ -269,69 +269,77 @@ function getLegalMoves() {
 }
 
 
-function getLegalMovesPieza(unaPieza){
-	var i = -1;
-	var fila=0; 
-	var columna=0; 
-	var someLegalMoves=[];
-	var vacia = false; 
-	
-	while (i <2){
-		if (((unaPieza.row != 0)&&(turnoBlancas))||((unaPieza.row != 7)&&(turnoRojas))){ // Si estan al final del tablero, no hay movimientos posibles
-			if (((unaPieza.column != 0)&& (i==-1))||((unaPieza.column != 7)&& (i==1))){ // Si est�n en una esquina del tablero, solo hay que comprobar uno de los laterales
-				if (turnoBlancas){ // As� controlamos la direcci�n de la pieza
-					fila = unaPieza.row -1;
-					columna = unaPieza.column +i; 
-				}
-				else {
-					fila = unaPieza.row +1;
-					columna = unaPieza.column +i; 
-				}
-				var j = 0; 
-				var existe = false; 
-				while ((j<piezas.length) && (existe===false)){ // Si hay una pieza en la casilla a la que nos queremos mover, no nos podemos mover, a menos que se pueda saltar
-					if ((piezas[j].row === fila) && (piezas[j].column === columna)){
-						existe = true; 
-						if (piezas[j].color != unaPieza.color){ // Si son de distinto color, igual se puede saltar
-							if ((i<0)&&(turnoBlancas)&&(unaPieza.column >= 2)&&(unaPieza.row >= 2)){ // Miramos si, siendo blancas, tienen sitio para saltar 
-								fila = unaPieza.row -2;
-								columna = unaPieza.column -2; 
-								vacia = casillaVacia(fila, columna); // Si tiene sitio y est� vac�a, hay sitio para hacer un salto
-							}
-							else if ((i>0)&&(turnoBlancas)&&(unaPieza.column <= 5)&&(unaPieza.row >= 2)){ // Miramos si, siendo blancas, tienen sitio para saltar 
-								fila = unaPieza.row -2;
-								columna = unaPieza.column +2; 
-								vacia = casillaVacia(fila, columna);  // Si tiene sitio y est� vac�a, hay sitio para hacer un salto
-							}
-							else if ((i<0)&&(turnoRojas)&&(unaPieza.column >= 2)&&(unaPieza.row <= 5)){ // Lo mismo para Rojas
-								fila = unaPieza.row +2;
-								columna = unaPieza.column -2; 
-								vacia = casillaVacia(fila, columna); 	
-							}
-							else if ((i>0)&&(turnoRojas)&&(unaPieza.column <= 5)&&(unaPieza.row <= 5)){
-								fila = unaPieza.row +2;
-								columna = unaPieza.column +2; 
-								vacia = casillaVacia(fila, columna); 	
-							}
-						}
-					}
-					else {
-						j++; 
-					}
-				}	
-				if ((existe === false)){ // Si la casilla contigua est� libre, se puede mover.
-					var aMove = new Move(unaPieza.row, unaPieza.column, fila, columna); 
-					someLegalMoves.push(aMove); 
-				}
-				else if ((existe === true) && (vacia===true)){  //Si no est� libre pero se puede hacer un salto, tambi�n.
-					var aJump = new Jump(unaPieza.row, unaPieza.column, fila, columna); 
-					someLegalMoves.unshift(aJump); // Los saltos quedan los primeros. 
-				}
-			}
-		}
-		i = i+2; 
-	}	
-	return someLegalMoves; 
+// La función calcula los movimientos legales posibles para una pieza en el tablero.
+function getLegalMovesPieza(unaPieza) {
+    var i = -1; // Inicialización de la variable i con -1.
+    var fila = 0; // Inicialización de la variable fila con 0.
+    var columna = 0; // Inicialización de la variable columna con 0.
+    var someLegalMoves = []; // Array para almacenar los movimientos legales.
+    var vacia = false; // Bandera para comprobar si una casilla está vacía.
+
+    // El siguiente bucle recorre posibles desplazamientos horizontales.
+    while (i < 2) {
+        // Se comprueba si la pieza no está en el borde del tablero y si es el turno de las blancas o rojas.
+        if (((unaPieza.row != 0) && (turnoBlancas)) || ((unaPieza.row != 7) && (turnoRojas))) {
+            // Se comprueba si la pieza no está en una esquina del tablero y solo se verifica un lateral.
+            if (((unaPieza.column != 0) && (i == -1)) || ((unaPieza.column != 7) && (i == 1))) {
+                // Se ajustan las coordenadas de fila y columna según el turno de las piezas.
+                if (turnoBlancas) {
+                    fila = unaPieza.row - 1;
+                    columna = unaPieza.column + i;
+                } else {
+                    fila = unaPieza.row + 1;
+                    columna = unaPieza.column + i;
+                }
+
+                var j = 0;
+                var existe = false;
+                // Se verifica si hay una pieza en la casilla a la que se quiere mover.
+                while (j < piezas.length && existe === false) {
+                    // Si hay una pieza en la casilla, se actualiza la bandera 'existe'.
+                    if (piezas[j].row === fila && piezas[j].column === columna) {
+                        existe = true;
+                        // Si las piezas son de distinto color, se comprueba si se puede hacer un salto.
+                        if (piezas[j].color != unaPieza.color) {
+                            // Se verifican los posibles saltos según la posición de la pieza.
+                            if (i < 0 && turnoBlancas && unaPieza.column >= 2 && unaPieza.row >= 2) {
+                                fila = unaPieza.row - 2;
+                                columna = unaPieza.column - 2;
+                                vacia = casillaVacia(fila, columna); // Se comprueba si la casilla está vacía.
+                            } else if (i > 0 && turnoBlancas && unaPieza.column <= 5 && unaPieza.row >= 2) {
+                                fila = unaPieza.row - 2;
+                                columna = unaPieza.column + 2;
+                                vacia = casillaVacia(fila, columna);
+                            } else if (i < 0 && turnoRojas && unaPieza.column >= 2 && unaPieza.row <= 5) {
+                                fila = unaPieza.row + 2;
+                                columna = unaPieza.column - 2;
+                                vacia = casillaVacia(fila, columna);
+                            } else if (i > 0 && turnoRojas && unaPieza.column <= 5 && unaPieza.row <= 5) {
+                                fila = unaPieza.row + 2;
+                                columna = unaPieza.column + 2;
+                                vacia = casillaVacia(fila, columna);
+                            }
+                        }
+                    } else {
+                        j++; // Se pasa a la siguiente pieza.
+                    }
+                }
+
+                // Si la casilla contigua está libre, se agrega el movimiento a someLegalMoves.
+                if (existe === false) {
+                    var aMove = new Move(unaPieza.row, unaPieza.column, fila, columna);
+                    someLegalMoves.push(aMove);
+                }
+                // Si no está libre pero se puede hacer un salto, se agrega el salto al principio de someLegalMoves.
+                else if (existe === true && vacia === true) {
+                    var aJump = new Jump(unaPieza.row, unaPieza.column, fila, columna);
+                    someLegalMoves.unshift(aJump);
+                }
+            }
+        }
+        i = i + 2; // Se incrementa i en 2 para pasar a la siguiente posición horizontal.
+    }
+    return someLegalMoves; // Se devuelve el array con los movimientos legales.
 }
 
 function gestorClick(e) {
