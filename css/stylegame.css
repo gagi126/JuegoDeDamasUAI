@@ -1,0 +1,86 @@
+/* Estilos Generales */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 50px;
+}
+
+.title {
+    margin-bottom: 20px;
+}
+
+.player-one-input {
+    margin-bottom: 10px;
+}
+
+.player-two-input {
+    margin-bottom: 20px;
+}
+
+.options-content {
+    margin-top: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.list-button {
+    margin-right: 10px;
+}
+
+/* Estilos Específicos */
+.turn {
+    margin-top: 30px;
+}
+
+#playerFields {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#juego {
+    border: 1px solid #000;
+}
+
+#moveAndPoints {
+    display: flex;
+    justify-content: space-between;
+    max-width: 400px;
+    margin-top: 20px;
+}
+
+#movements,
+#playerOnePoints,
+#playerTwoPoints {
+    margin: 0;
+}
+
+#moveBlancas,
+#moveRojas {
+    display: flex;
+    justify-content: space-between;
+    max-width: 400px;
+    margin-top: 20px;
+}
+
+#newGame {
+    margin-top: 30px;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.footer {
+    background-color: #f8f9fa;
+    padding: 20px 0;
+    text-align: center;
+    margin-top: 50px;
+}

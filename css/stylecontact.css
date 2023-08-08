@@ -1,0 +1,30 @@
+/* Estilos para el contenedor principal */
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+}
+
+/* Estilos para el formulario */
+form {
+    width: 100%;
+    max-width: 400px;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+/* Estilos para el footer */
+.footer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: #f8f9fa;
+    padding: 20px 0;
+    text-align: center;
+    margin-top: 50px;
+}

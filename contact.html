@@ -3,51 +3,7 @@
 <head>
     <title>Página de Contacto</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
-    <style>
-        .footer {
-            background-color: #f8f9fa;
-            padding: 20px 0;
-            text-align: center;
-            margin-top: 50px;
-        }
-    </style>
-    <script>
-        function validarFormulario() {
-            var nombre = document.getElementById("nombre").value;
-            var email = document.getElementById("email").value;
-            var mensaje = document.getElementById("mensaje").value;
-
-            // Validar nombre alfanumérico
-            var nombreValido = /^[a-zA-Z0-9\s]+$/.test(nombre);
-            if (!nombreValido) {
-                alert("Por favor, ingresa un nombre válido.");
-                return false;
-            }
-
-            // Validar email válido
-            var emailValido = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
-            if (!emailValido) {
-                alert("Por favor, ingresa un correo electrónico válido.");
-                return false;
-            }
-
-            // Validar mensaje con más de 5 caracteres
-            if (mensaje.length < 5) {
-                alert("Por favor, ingresa un mensaje con al menos 5 caracteres.");
-                return false;
-            }
-
-            // Abrir herramienta de envío de emails predeterminada
-            var subject = "Mensaje de contacto";
-            var body = "Nombre: " + nombre + "\nEmail: " + email + "\nMensaje: " + mensaje;
-            window.location.href = "mailto:tuemail@example.com?subject=" + encodeURIComponent(subject) + "&body=" + encodeURIComponent(body);
-
-            return true;
-        }
-    </script>
+    <link rel="stylesheet" href="/css/stylecontact.css">
 </head>
 <body>
     <div class="container">
@@ -76,8 +32,10 @@
     <div class="container">
         <p>Desarrollado por Gaston Albornoz Salafia</p>
         <button class="btn btn-primary" onclick="window.location.href='index.html'" >Volver al juego</button></br>
-		<a href="https://github.com/gagi126/JuegoDeDamasUAI" class="btn btn-link">Link a repositorio de GitHub</a>
+        <a href="https://github.com/gagi126/JuegoDeDamasUAI" class="btn btn-link">Link a repositorio de GitHub</a>
     </div>
-</footer>
+    </footer>
+
+    <script src="/js/scriptcontact.js"></script>
 </body>
 </html>
