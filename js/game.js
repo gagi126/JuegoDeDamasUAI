@@ -381,7 +381,13 @@ function clickOnPiece(indicePieza) {
         drawBoard();
     } else {
         // Muestra un mensaje si no es el turno del jugador.
+        // Oculta el mensaje después de 2 segundos.
+        document.getElementById('isNotYourTurn').style.display = '';
         document.getElementById('isNotYourTurn').innerHTML = '¡No es tu turno!';
+        setTimeout(() => {
+            document.getElementById('isNotYourTurn').style.display = 'none';
+        }, 2000);
+        
     }
 }
 
