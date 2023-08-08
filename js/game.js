@@ -38,16 +38,20 @@ let gMoveCount = 0;
 let gMoveCountElem = 0;
 var gGameInProgress;
 
-contextGame = document.getElementById("contextGame");
-contextGame.innerHTML = "<div id='restart_game' class='butn' onclick='restartGame(); return false;'>Start New Game</div>";
-contextGame.innerHTML += "<div id='save_game' class='butn' onclick='saveGame(); '>Save Game</div>";
-contextGame.innerHTML += "<div id='load_game' class='butn' onclick='LoadGame(); '>Load Game</div>";
-contextGame.innerHTML += "<div id='add_player' class='butn' onclick='addPlayer();'>Add Player</div>";
-contextGame.innerHTML += "<div id='player_one' class='player'> <img src='images/cuphead.png'>Player 1: <span id='player_one_score'></span> <input id='player1'type='text' value='enter your name'/></div>";
-contextGame.innerHTML += "<div id='player_two' class='player'> <img src='images/mugman.png'>Player 2: <span id='player_two_score'></span> <input id='player2'type='text' value='enter your name'/></div>";
-contextGame.innerHTML += "<div id='whosturn'></div>";
-
-
+juego = document.getElementById("juego");
+juego.style.display = 'none';
+esTurno = document.getElementById("esTurno");
+esTurno.style.display = 'none';
+isNotYourTurn = document.getElementById("isNotYourTurn");
+isNotYourTurn.style.display = 'none';
+endGameText = document.getElementById("endGameText");
+endGameText.style.display = 'none';
+tieText = document.getElementById("tieText");
+tieText.style.display = 'none';
+cannotEatPieceSameColor = document.getElementById("cannotEatPieceSameColor");
+cannotEatPieceSameColor.style.display = 'none';
+moveAndPoints = document.getElementById("moveAndPoints");
+moveAndPoints.style.display = 'none';
 
 
 let gamesHistory = localStorage.getItem('gamesHistory')
@@ -510,6 +514,7 @@ function mostrarMovimiento(casilla1, casilla2, salto) {
             document.getElementById('playerOnePointsCount').innerHTML = playerOnePoints;
         }
         document.getElementById("moveBlancas").appendChild(movimiento);
+		document.getElementById('esTurno').style.display = '';
         document.getElementById('esTurno').innerHTML = `Es turno del jugador rojo: ${playerTwo} !`;
     } else {
         if (salto) {
@@ -517,6 +522,7 @@ function mostrarMovimiento(casilla1, casilla2, salto) {
             document.getElementById('playerTwoPointsCount').innerHTML = playerTwoPoints;
         }
         document.getElementById("moveRojas").appendChild(movimiento);
+		document.getElementById('esTurno').style.display = '';
         document.getElementById('esTurno').innerHTML = `Es turno del jugador blanco: ${playerOne} !`;
     }
 }
@@ -629,6 +635,7 @@ function getPlayersNames() {
   if (playerOne && playerTwo) {
     localStorage.setItem('playerOne', playerOne);
     localStorage.setItem('playerTwo', playerTwo);
+	 document.getElementById('esTurno').style.display = '';
     document.getElementById(
       'esTurno'
     ).innerHTML = `Empieza el jugador blanco : ${playerOne} !`;
@@ -689,8 +696,10 @@ function endGame(){
 	gGameInProgress = false; 
 	if (sonTablas){
 		document.getElementById('tieText').style.display = '';
+		document.getElementById('tieText').innerHTML = 'Hubo empate, juege de nuevo!';
 	}
 	else if (turnoBlancas){
+		document.getElementById('endGameText').style.display = '';
 		document.getElementById(
       'endGameText'
     ).innerHTML = `Juego terminado, Jugador ${playerTwo} Gano!`;
@@ -702,6 +711,7 @@ function endGame(){
     localStorage.setItem('gamesHistory', JSON.stringify(gamesHistory));
 	}
 	else {
+		document.getElementById('endGameText').style.display = '';
 		document.getElementById(
       'endGameText'
     ).innerHTML = `Juego terminado. Jugador ${playerOne} Gano!`;
@@ -715,6 +725,7 @@ function endGame(){
 	// Mostrar el mensaje durante 6 segundos y luego limpiarlo
 	setTimeout(() => {
 		document.getElementById('endGameText').innerHTML = '';
+		document.getElementById('endGameText').style.display = 'none';
 		document.getElementById('eatPiece').innerHTML = '';
 		document.getElementById('tieText').style.display = 'none';
 		newGame();
@@ -844,18 +855,3 @@ function Jump(fromRow, fromCol, toRow, toCol) {
 
 Jump.prototype = new Move(); // Hereda de Move.
 Jump.prototype.constructor = Jump; // Establece el constructor correctamente.
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
