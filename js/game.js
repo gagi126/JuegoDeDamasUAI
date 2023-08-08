@@ -40,9 +40,9 @@ var gMoveCount = 0;
 var gMoveCountElem = 0;
 var gGameInProgress;
 
-// Oculta el elemento con el ID "saveOptions"
-saveOptions = document.getElementById("saveOptions");
-saveOptions.style.display = 'none';
+// Oculta el elemento con el ID "contextGame"
+contextGame = document.getElementById("contextGame");
+contextGame.style.display = 'none';
 
 // Oculta el elemento con el ID "juego"
 juego = document.getElementById("juego");
@@ -695,7 +695,7 @@ function getPlayersNames() {
         document.getElementById('esTurno').innerHTML = `Empieza el jugador blanco: ${playerOne} !`;
         document.getElementById('moveAndPoints').style.display = '';
         document.getElementById('juego').style.display = '';
-        document.getElementById('saveOptions').style.display = '';
+        document.getElementById('contextGame').style.display = '';
 
         // Inicia el juego pasando los elementos del lienzo y el contador de movimientos.
         iniciarJuego(
