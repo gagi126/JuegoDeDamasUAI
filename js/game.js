@@ -610,7 +610,6 @@ function isThereAPieceBetween(casilla1, casilla2) {
                     document.getElementById('cannotEatPieceSameColor').style.display = 'none';
                     newGame();
                 }, 2000);
-               
             }
         }
         i++;
