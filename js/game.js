@@ -604,12 +604,12 @@ function isThereAPieceBetween(casilla1, casilla2) {
                 existe = true;
                 indiceABorrar = i; // Guarda el índice de la pieza a borrar en caso de salto.
             } else {
+                document.getElementById('cannotEatPieceSameColor').style.display = '';
+                document.getElementById('cannotEatPieceSameColor').innerHTML = 'No puedes comer fichas de tu mismo color';
                 setTimeout(() => {
-                    document.getElementById('cannotEatPieceSameColor').style.display = '';
-                    document.getElementById('cannotEatPieceSameColor').innerHTML = 'No puedes comer fichas de tu mismo color';
                     document.getElementById('cannotEatPieceSameColor').style.display = 'none';
                     newGame();
-                }, 3000);
+                }, 2000);
                
             }
         }
