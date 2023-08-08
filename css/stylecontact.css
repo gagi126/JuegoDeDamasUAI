@@ -4,7 +4,7 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    height: 100vh;
+    min-height: 100vh; /* Usamos min-height para asegurarnos de que ocupe al menos el 100% del alto de la pantalla */
 }
 
 /* Estilos para el formulario */
@@ -26,5 +26,5 @@ form {
     background-color: #f8f9fa;
     padding: 20px 0;
     text-align: center;
-    margin-top: 50px;
+    margin-top: auto; /* Ajustamos el margen superior para acercarlo al margen inferior */
 }
